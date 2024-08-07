@@ -135,15 +135,22 @@ function mouseUp() {
 function showPreviewProgress(e){
     const rect = progressBar.getBoundingClientRect()
     const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
-    const previewMath = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width);
 
-    var w = Number(window.getComputedStyle(rangeProgress).width.replace(/[^0-9]/g, ''))
+    let x = e.offsetX;
 
-    
+    let y = x - 100;
+
+    if (y <= 10) {
+        previewArea.style.left =`10px`
+    }
+    else {
+        previewArea.style.left =`${y}px`;
+    }
+
+    console.log(`${y}px`)
 
     previewArea.style.display = 'block'
 
-    previewArea.style.setProperty("--preview-position", previewMath);
     var previewImageNumber = (Math.floor((percent-0.01)/11.5)) +1;
     if(previewImageNumber > 0){ previewAreaImg.src = `./assets/previewImgs/preview${previewImageNumber}.jpg` }
     if(previewImageNumber > 0){ thumbnailImg.src = `./assets/previewImgs/preview${previewImageNumber}.jpg`}
@@ -725,6 +732,9 @@ blockForward.addEventListener('touchend', toggleEndTwoTimeSpeed);
 fastForward.onmouseover = fastForward.onmouseout = handler;
 fastRewind.onmouseover = fastRewind.onmouseout = handler;
 volumeBtn.onmouseover = volumeBtn.onmouseout = handler;
+
+progressBar.onmouseover = progressBar.onmouseout = handler;
+
 autoplay.onmouseover = autoplay.onmouseout = handler;
 caption.onmouseover = captionBtn.onmouseout = handler;
 setting.onmouseover = setting.onmouseout = handler;

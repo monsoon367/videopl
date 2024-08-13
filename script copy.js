@@ -11,122 +11,109 @@ videoPlayer.forEach(videoPlayer => {
     
 //sellect all require tags
 const mainVideo=videoPlayer.querySelector('#mainVideo'),
-tracks = videoPlayer.querySelectorAll("track"),
-twoTimeSpeedNotif=videoPlayer.querySelector('.twoTimeSpeedNotif'),
-ambientMode=videoPlayer.querySelector('#ambientMode'),
-ctx=ambientMode.getContext("2d"),
 mainVideoClickF=videoPlayer.querySelector('.mainVideoClickF'),
 mainVideoLeftMinorSensor=videoPlayer.querySelector('.mainVideoLeftMinorSensor'),
-controllersContainer=videoPlayer.querySelector('.controllersContainer'),
 headerControllers=videoPlayer.querySelector('.headerControllers'),
-settingMobile=videoPlayer.querySelector('#settingMobile'),
 videoFullscreenTitle=videoPlayer.querySelector('.videoFullscreenTitle'),
+controllers=videoPlayer.querySelector('.controllers'),
 controllersMobile=videoPlayer.querySelector('.controllersMobile'),
+controllersContainer=videoPlayer.querySelector('.controllersContainer'),
+
+canvas=videoPlayer.querySelector('#canvas'),
+ctx = canvas.getContext("2d"),
+
+fullscreen=videoPlayer.querySelector('#fullscreen'),
+fullscreenIcon=videoPlayer.querySelector('#fullscreenIcon'),
+fullscreenMobile=videoPlayer.querySelector('#fullscreenMobile'),
+fullscreenMobileIcon=videoPlayer.querySelector('#fullscreenMobileIcon'),
+
+
 blockRewind=videoPlayer.querySelector('.blockRewind'),
 blockCenter=videoPlayer.querySelector('.blockCenter'),
+blockForward=videoPlayer.querySelector('.blockForward'),
+fastRewind=videoPlayer.querySelector('#fastRewind'),
 playPauseMobile=videoPlayer.querySelector('#playPauseMobile'),
 playPauseMobileIcon=videoPlayer.querySelector('#playPauseMobileIcon'),
-blockForward=videoPlayer.querySelector('.blockForward'),
-thumbnail=videoPlayer.querySelector(".thumbnail"),
-thumbnailImg=videoPlayer.querySelector(".thumbnail img"),
-controllers=videoPlayer.querySelector('.controllers'),
-previewArea=videoPlayer.querySelector('.previewArea'),
-previewAreaImg=videoPlayer.querySelector('.previewArea img'),
-previewAreaSpan = videoPlayer.querySelector('.previewArea span'),
-progressBuffer=videoPlayer.querySelector('.progressBuffer'),
-progressPreview=videoPlayer.querySelector('.progressPreview'),
-progressShadow=videoPlayer.querySelector('.progressShadow'),
-progressBar=videoPlayer.querySelector('#progressBar'),
-rangeProgress=videoPlayer.querySelector('#rangeProgress'),
-fastRewind=videoPlayer.querySelector('#fastRewind'),
 playPause=videoPlayer.querySelector('#playPause'),
 playPauseIcon=videoPlayer.querySelector('#playPauseIcon'),
 fastForward=videoPlayer.querySelector('#fastForward'),
 volumeBtn=videoPlayer.querySelector('#volumeBtn'),
 volumeBtnIcon=videoPlayer.querySelector('#volumeBtnIcon'),
 volumeRange=videoPlayer.querySelector('#volumeRange'),
-current=videoPlayer.querySelector('.current'),
+durationMobile=videoPlayer.querySelector('.durationMobile'),
 duration=videoPlayer.querySelector('.duration'),
+current=videoPlayer.querySelector('.current'),
+
 autoplay=videoPlayer.querySelector('.auto-play'),
 captionBtn=videoPlayer.querySelector('#captionBtn'),
 captionIcon=videoPlayer.querySelector('#captionIcon'),
+
+
+settingMobile=videoPlayer.querySelector('#settingMobile'),
 setting=videoPlayer.querySelector('#setting'),
+settingsContainer=videoPlayer.querySelector('.settingsContainer'),
+
+deafultQuality=videoPlayer.querySelector('#deafultQuality'),
+qualityStatus=videoPlayer.querySelector('#qualityStatus'),
+settingList=videoPlayer.querySelector('.settingList'),
+qualityBtn=videoPlayer.querySelector('#qualityBtn'),
+qualityList=videoPlayer.querySelector('.qualityList'),
+qualityCloseBtn=videoPlayer.querySelector('#qualityCloseBtn'),
+
+playbackStatus=videoPlayer.querySelector('#playbackStatus'),
+customPlaybackStatus=videoPlayer.querySelector('#customPlaybackStatus'),
+playbackList=videoPlayer.querySelector('.playbackList'),
+playback=videoPlayer.querySelectorAll(".playbackBtnList li"),
+playbackSpeedBtn=videoPlayer.querySelector('#playbackSpeedBtn'),
+playbackCloseBtn=videoPlayer.querySelector('#playbackCloseBtn'),
+customLinkRangePlayback=videoPlayer.querySelector('#customLinkRangePlayback'),
+customRangePlayback=videoPlayer.querySelector('.customRangePlayback'),
+
 pictureInPicture=videoPlayer.querySelector('#pictureInPicture'),
+
+ambientBtn=videoPlayer.querySelector('#ambientBtn'),
+
+slider=videoPlayer.querySelector('.slider'),
+
 theaterMode=videoPlayer.querySelector('#theaterMode'),
 theaterIcon=videoPlayer.querySelector('#theaterIcon'),
-fullscreen=videoPlayer.querySelector('#fullscreen'),
-fullscreenIcon=videoPlayer.querySelector('#fullscreenIcon'),
-fullscreenMobile=videoPlayer.querySelector('#fullscreenMobile'),
-fullscreenMobileIcon=videoPlayer.querySelector('#fullscreenMobileIcon'),
 
-settingsContainer=videoPlayer.querySelector('.settingsContainer'),
-settingList=videoPlayer.querySelector('.settingList'),
-ambientBtn=videoPlayer.querySelector('#ambientBtn'),
-slider=videoPlayer.querySelector('.slider'),
 CaptionListBtn=videoPlayer.querySelector('#CaptionListBtn'),
-CaptionStatus=videoPlayer.querySelector("#CaptionStatus"),
-playbackSpeedBtn=videoPlayer.querySelector('#playbackSpeedBtn'),
-playbackStatus=videoPlayer.querySelector('#playbackStatus'),
-qualityBtn=videoPlayer.querySelector('#qualityBtn'),
-qualityStatus=videoPlayer.querySelector('#qualityStatus'),
 captionList=videoPlayer.querySelector('.captionList'),
 captionCloseBtn=videoPlayer.querySelector('#captionCloseBtn'),
 caption_labels=videoPlayer.querySelector(".captionList ul"),
-playbackList=videoPlayer.querySelector('.playbackList'),
-playbackCloseBtn=videoPlayer.querySelector('#playbackCloseBtn'),
-playback=videoPlayer.querySelectorAll(".playbackBtnList li"),
-customLinkRangePlayback=videoPlayer.querySelector('#customLinkRangePlayback'),
-customRangePlayback=videoPlayer.querySelector('.customRangePlayback'),
+CaptionStatus=videoPlayer.querySelector("#CaptionStatus"),
+
+twoTimeSpeedNotif=videoPlayer.querySelector('.twoTimeSpeedNotif'),
 playbackRangeCloseBtn=videoPlayer.querySelector('#playbackRangeCloseBtn'),
 rangeCustomPlayback=videoPlayer.querySelector("#rangeCustomPlayback"),
+customPlaybackNotif=videoPlayer.querySelector("#customPlaybackNotif"),
 PlaybackRangeValue=videoPlayer.querySelector("#PlaybackRangeValue"),
-qualityList=videoPlayer.querySelector('.qualityList'),
-qualityCloseBtn=videoPlayer.querySelector('#qualityCloseBtn'),
-qualitys = videoPlayer.querySelectorAll("source[size]"),
+rewindNotif=videoPlayer.querySelector('.rewindNotif'),
+arrowLOne=videoPlayer.querySelector('.arrowLOne'),
+arrowLTwo=videoPlayer.querySelector('.arrowLTwo'),
+arrowLThree=videoPlayer.querySelector('.arrowLThree'),
+rewindTime=videoPlayer.querySelector('.arrowLThree'),
+forwardNotif=videoPlayer.querySelector('.forwardNotif'),
+arrowROne=videoPlayer.querySelector('.arrowROne'),
+arrowRTwo=videoPlayer.querySelector('.arrowRTwo'),
+arrowRThree=videoPlayer.querySelector('.arrowRThree'),
 quality_ul = videoPlayer.querySelector(".settingsContainer [data-label='qualityList'] ul"),
-deafultQuality=videoPlayer.querySelector('#deafultQuality');
+qualitys = videoPlayer.querySelectorAll("source[size]"),
 
-document.addEventListener('keydown',(event) => {
-    const {activeElement} = document
-    const hasButtonRole = activeElement?.getAttribute('role') === 'button'
-    if (hasButtonRole) {
-        if (['Spacebar', ' ', 'Enter'].includes(event.key)) {
-            event.preventDefault()
-        }
-        if (event.key === 'Enter') {
-            activeElement.click()
-        }
-    }
-})
-document.addEventListener('keyup',(event) => {
-    const {activeElement} = document
-    const hasButtonRole = activeElement?.getAttribute('role') === 'button'
-    if (hasButtonRole && ['Spacebar', ' ', ].includes(event.key)) {
-        event.preventDefault()
-        activeElement.click()
-    }
-})
+rangeProgress=videoPlayer.querySelector('#rangeProgress'),
+progressShadow=videoPlayer.querySelector('.progressShadow'),
+progressBuffer=videoPlayer.querySelector('.progressBuffer'),
+progressBar=videoPlayer.querySelector('#progressBar'),
 
-let mainVideoSources = mainVideo.querySelectorAll("source");
-for (let i = 0; i < mainVideoSources.length; i++) {
-  let videoUrl = mainVideoSources[i].src;
-  blobUrl(mainVideoSources[i], videoUrl);
-}
-function blobUrl(video, videoUrl) {
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", videoUrl);
-  xhr.responseType = "arraybuffer";
-  xhr.onload = (e) => {
-    let blob = new Blob([xhr.response]);
-    let url = URL.createObjectURL(blob);
-    video.src = url;
-  };
-  xhr.send();
-}
-mainVideo.addEventListener("contextmenu", (e) => {
-  e.preventDefault();
-});
+previewArea=videoPlayer.querySelector('.previewArea'),
+previewAreaImg=videoPlayer.querySelector('.previewArea img'),
+previewAreaSpan = videoPlayer.querySelector('.previewArea span'),
 
+thumbnail=videoPlayer.querySelector(".thumbnail"),
+thumbnailImg=videoPlayer.querySelector(".thumbnail img"),
+
+tracks = videoPlayer.querySelectorAll("track");
 
 
 rangeProgress.onmouseup = () => mouseUp()
@@ -140,9 +127,10 @@ rangeProgress.addEventListener("pointerdown", (e) => {
     setTimelinePosition(e);
     rangeProgress.addEventListener("pointermove", setTimelinePosition);
     rangeProgress.addEventListener("pointerup", () => {
-        rangeProgress.removeEventListener("pointermove", setTimelinePosition);
-    })
-});
+      rangeProgress.removeEventListener("pointermove", setTimelinePosition);
+      })
+    });
+
 
 function updatePlayerTime() {
     mainVideo.currentTime = (rangeProgress.value*mainVideo.duration)/100;
@@ -165,8 +153,9 @@ function showPreviewProgress(e){
     const rect = progressBar.getBoundingClientRect()
     const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
 
-    progressPreview.style.width = percent + '%';
-    progressPreview.classList.add('active');
+    progressShadow.style.setProperty("--progressPreview", percent / 100);
+
+    progressShadow.classList.add('active');
 
     let progressWidthval = progressBar.clientWidth;
     let x = e.offsetX;
@@ -197,20 +186,21 @@ function showPreviewProgress(e){
 
 function progressbarMouseout(){
     previewArea.style.display = 'none'
-    progressPreview.classList.remove('active')
+    progressShadow.classList.remove('active');
 }
 
 mainVideo.addEventListener('timeupdate', function() {
-    const proggres = (mainVideo.currentTime / mainVideo.duration)* 100;
-    progressShadow.style.width = proggres+ '%';
-    rangeProgress.value = proggres;
+    const proggres = (mainVideo.currentTime / mainVideo.duration);
+    progressShadow.style.setProperty("--progressShadow", proggres);
+    rangeProgress.value = proggres * 100;
 });
 
 rangeProgress.addEventListener('input', function(){
     const time = (rangeProgress.value / 100) * mainVideo.duration;
     mainVideo.currentTime = time;
-    progressShadow.style.width = rangeProgress.value + '%';
+    progressShadow.style.setProperty("--progressShadow", rangeProgress.value / 100);
 });
+
 
 function drawProgress(canvas, buffered, duration) {
     let context = canvas.getContext('2d', { antialias: false });
@@ -229,12 +219,64 @@ mainVideo.addEventListener('progress', () => {
     drawProgress(progressBuffer, mainVideo.buffered, mainVideo.duration);
 })
 
-function getCurrentImage() {
-  ctx.drawImage(mainVideo, 0, 0, ambientMode.width, ambientMode.height);
+
+
+
+let mainVideoSources = mainVideo.querySelectorAll("source");
+for (let i = 0; i < mainVideoSources.length; i++) {
+  let videoUrl = mainVideoSources[i].src;
+  blobUrl(mainVideoSources[i], videoUrl);
 }
+function blobUrl(video, videoUrl) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", videoUrl);
+  xhr.responseType = "arraybuffer";
+  xhr.onload = (e) => {
+    let blob = new Blob([xhr.response]);
+    let url = URL.createObjectURL(blob);
+    video.src = url;
+  };
+  xhr.send();
+}
+
+mainVideo.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+});
+
+
+function getCurrentImage() {
+  ctx.drawImage(mainVideo, 0, 0, canvas.width, canvas.height);
+}
+
 setInterval(getCurrentImage, 100);
 
 
+
+document.addEventListener('keydown',(event) => {
+    const {activeElement} = document
+    const hasButtonRole = activeElement?.getAttribute('role') === 'button'
+    if (hasButtonRole) {
+        if (['Spacebar', ' ', 'Enter'].includes(event.key)) {
+            event.preventDefault()
+        }
+        if (event.key === 'Enter') {
+            activeElement.click()
+        }
+    }
+})
+document.addEventListener('keyup',(event) => {
+    const {activeElement} = document
+    const hasButtonRole = activeElement?.getAttribute('role') === 'button'
+    if (hasButtonRole && ['Spacebar', ' ', ].includes(event.key)) {
+        event.preventDefault()
+        activeElement.click()
+    }
+})
+
+
+mainVideo.addEventListener("timeupdate", (e) => {
+    current.textContent = formatDuration(mainVideo.currentTime)
+});
 
 //play pause btn function {
 mainVideo.addEventListener("play",()=>{
@@ -247,6 +289,12 @@ mainVideo.addEventListener("pause",()=>{
     playPauseMobileIcon.src = "./assets/icons/Play-icon.svg";
     playPauseIcon.title = "Play"
 });
+mainVideo.addEventListener('ended' ,myHandler,false);
+    function myHandler(){
+        playPauseIcon.src = "./assets/icons/Replay-icon.svg";
+        playPauseMobileIcon.src = "./assets/icons/Replay-icon.svg";
+    };
+
 function togglePlay(){
     mainVideo.paused ? mainVideo.play() : mainVideo.pause();
 };
@@ -307,11 +355,9 @@ volumeRange.addEventListener('input',() => {
 //}
 
 //duration function {
-mainVideo.addEventListener("timeupdate", (e) => {
-    current.textContent = formatDuration(mainVideo.currentTime)
-});
 mainVideo.addEventListener('loadedmetadata',() => { 
     duration.textContent = formatDuration(mainVideo.duration);
+    durationMobile.textContent = formatDuration(mainVideo.duration);
 });
  
 const leadingZeroFormater = new Intl.NumberFormat(undefined, {
@@ -328,6 +374,8 @@ function formatDuration(time){
     }
 }
 //)
+
+
 
 //autoplay btn function {
 autoplay.addEventListener("click", () => {
@@ -380,19 +428,22 @@ settingMobile.addEventListener('click',() => {
     }
 })
 
-document.addEventListener('click', function handleClickOutsideBox(event) {
-    // 👇️ the element the user clicked
-    if (!setting.contains(event.target) && !settingsContainer.contains(event.target) && !settingMobile.contains(event.target)) {
-        toggleSettingCloseAll();
-        clearTimeout(timer);
-        hideControlss();
-    } 
-  });
+
+
+mainVideoClickF.addEventListener('click',toggleSettingCloseAll);
+playPause.addEventListener('click', toggleSettingCloseAll);
+fastRewind.addEventListener('click', toggleSettingCloseAll);
+fastForward.addEventListener('click', toggleSettingCloseAll);
+autoplay.addEventListener('click', toggleSettingCloseAll);
+captionBtn.addEventListener('click', toggleSettingCloseAll);
+pictureInPicture.addEventListener('click', toggleSettingCloseAll);
+fullscreenMobile.addEventListener('click', toggleSettingCloseAll);
+fullscreen.addEventListener('click', toggleSettingCloseAll);
 
 //setting list function
 ambientBtn.addEventListener("click", () => {
     slider.classList.toggle("active");
-    ambientMode.classList.toggle("unactive");
+    canvas.classList.toggle("unactive");
 });
 
 qualityBtn.addEventListener('click',() => {
@@ -494,6 +545,7 @@ playback.forEach(playback => {
         mainVideo.playbackRate = cusPlayback;
 
         let speed = playback.getAttribute("data-speed");
+        let togglePlaybackStatus = customPlaybackStatus.getAttribute("data-speed");
         PlaybackRangeValue.textContent = `${cusPlayback}x`;
         if (cusPlayback == speed) {
             removePlaybackActiveClasses(playback);
@@ -557,6 +609,7 @@ caption.forEach((event) => {
         }
   });
 });
+
 
 let track = mainVideo.textTracks;
 
@@ -712,7 +765,7 @@ volumeBtn.onmouseover = volumeBtn.onmouseout = handler;
 progressBar.onmouseover = progressBar.onmouseout = handler;
 
 autoplay.onmouseover = autoplay.onmouseout = handler;
-captionBtn.onmouseover = captionBtn.onmouseout = handler;
+caption.onmouseover = captionBtn.onmouseout = handler;
 setting.onmouseover = setting.onmouseout = handler;
 pictureInPicture.onmouseover = pictureInPicture.onmouseout = handler;
 fullscreen.onmouseover = fullscreen.onmouseout = handler;
@@ -730,16 +783,17 @@ let timer;
 const hideControlss = () => {
     if (mainVideo.paused) return;
     timer = setTimeout(() => {
-        if (mainVideo.paused) return;
         if (settingsContainer.classList.contains("scOpen") 
             || fastForward.classList.contains('active')) {
             headerControllers.classList.add('active');
             controllers.classList.add('active');
             controllersMobile.classList.add('active');
+            caption_text.classList.add('active');
         } else {
             headerControllers.classList.remove('active');
             controllers.classList.remove('active');
             controllersMobile.classList.remove('active');
+            caption_text.classList.remove('active');
         }
     },3000)
 };
@@ -750,12 +804,14 @@ mainVideoLeftMinorSensor.addEventListener('mousemove',() => {
     headerControllers.classList.remove('active');
     controllers.classList.remove('active');
     controllersMobile.classList.remove('active');
+    caption_text.classList.remove('active');
 });
 
 headerControllers.addEventListener('mouseover',() => {
     headerControllers.classList.add('active');
     controllers.classList.add('active');
     controllersMobile.classList.add('active');
+    caption_text.classList.add('active');
     clearTimeout(timer);
     hideControlss();
 })
@@ -764,6 +820,7 @@ controllers.addEventListener('mouseover',() => {
     headerControllers.classList.add('active');
     controllers.classList.add('active');
     controllersMobile.classList.add('active');
+    caption_text.classList.add('active');
     clearTimeout(timer);
     hideControlss();
 })
@@ -772,6 +829,7 @@ controllersMobile.addEventListener('mousemove',() => {
     headerControllers.classList.add('active');
     controllers.classList.add('active');
     controllersMobile.classList.add('active');
+    caption_text.classList.add('active');
     clearTimeout(timer);
     hideControlss();
 });
@@ -780,6 +838,7 @@ mainVideoClickF.addEventListener('mousemove',() => {
     headerControllers.classList.add('active');
     controllers.classList.add('active');
     controllersMobile.classList.add('active');
+    caption_text.classList.add('active');
     clearTimeout(timer);
     hideControlss();
 });
@@ -788,6 +847,7 @@ playPause.addEventListener('click',() => {
     headerControllers.classList.add('active');
     controllers.classList.add('active');
     controllersMobile.classList.add('active');
+    caption_text.classList.add('active');
     clearTimeout(timer);
     hideControlss();
 });
@@ -796,6 +856,7 @@ playPauseMobile.addEventListener('click',() => {
     headerControllers.classList.add('active');
     controllers.classList.add('active');
     controllersMobile.classList.add('active');
+    caption_text.classList.add('active');
     clearTimeout(timer);
     hideControlss();
 });
@@ -807,10 +868,12 @@ mainVideoClickF.addEventListener('mouseout',() => {
             headerControllers.classList.add('active');
         controllers.classList.add('active');
         controllersMobile.classList.add('active');
+        caption_text.classList.add('active');
     } else {
         headerControllers.classList.remove('active');
         controllers.classList.remove('active');
         controllersMobile.classList.remove('active');
+        caption_text.classList.remove('active');
     }
 });
 controllers.addEventListener('mouseout',() => {
@@ -820,18 +883,21 @@ controllers.addEventListener('mouseout',() => {
         headerControllers.classList.add('active');
         controllers.classList.add('active');
         controllersMobile.classList.add('active');
+        caption_text.classList.add('active');
     } else {
         headerControllers.classList.remove('active');
         controllers.classList.remove('active');
         controllersMobile.classList.remove('active');
+        caption_text.classList.remove('active');
     }
 });
 
-mainVideo.addEventListener('ended',end);
-    function end(){
+mainVideo.addEventListener('ended' ,myHandler,false);
+    function myHandler(){
         headerControllers.classList.add('active');
         controllers.classList.add('active');
         controllersMobile.classList.add('active');
+        caption_text.classList.add('active');
 };
 //}
 

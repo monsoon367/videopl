@@ -1,0 +1,191 @@
+    let x = e.offsetX;
+    let progressWidthval = progressBar.clientWidth + 2;
+
+    previewArea.style.setProperty("--x", `${x}px`);
+    if (x >= progressWidthval - 80) {
+      x = progressWidthval - 80;
+    } else if (x <= 75) {
+      x = 75;
+    } else {
+      x = e.offsetX;
+    }
+
+
+    var w = Number(window.getComputedStyle(rangeProgress).width.replace(/[^0-9]/g, ''))
+
+    if((previewMath*w)/100 <= 85){
+        previewArea.style.left = '0px'
+    }else if((previewMath*w)/100 >= w-85){
+        previewArea.style.left = w-170 + 'px'
+    }else{
+        previewArea.style.left = ((previewMath*w)/100)-85 + 'px'
+    }
+
+    calc(var(--preview-position) * 100%)
+
+    left: calc(var(--x) + 11px);
+
+    left: calc(var(--x) - 100px);
+
+    if (percent <= 13) {
+      previewArea.style.left = '0%';
+  } else if (percent >= 80) {
+      previewArea.style.left = '75%';
+  }
+
+
+    let x = e.offsetX;
+    let progressWidthval = progressBar.clientWidth;
+
+    previewArea.style.setProperty("--x", `${x}px`);
+
+
+    if (y <= 14) {
+      previewArea.style.left =`12px`
+  } else if (y >= 1048) {
+      previewArea.style.right =`12px`
+  }
+  
+  else {
+      previewArea.style.left =`${y}px`;
+  }
+
+
+  let x = e.offsetX;
+
+  let y = x - 100;
+
+  if (y <= 10) {
+      previewArea.style.left =`10px`
+  }
+  else {
+      previewArea.style.left =`${y}px`;
+  }
+
+  13%
+
+  previewArea.style.left =`${percent}%`;
+
+    console.log(`${percent}%`)
+
+
+
+    previewArea.style.left =`${percent}%`;
+
+
+
+    console.log(`${percent}%`)
+
+
+    previewArea.style.display = 'block'
+
+
+
+    previewArea.style.left =`${percent}%`;
+
+    if (percent <= 13) {
+        previewArea.style.left =`0%`
+    }
+
+    console.log(`${percent}%`)
+
+
+
+    if (y <= 10) {
+        previewArea.style.left =`10px`
+    } else if (x >= progressWidthval - 115) {
+        previewArea.style.left ='';
+        if (!document.fullscreenElement) {
+            previewArea.style.right =`10px`
+        } else {
+            previewArea.style.right =`18px`
+        }
+    } else {
+        previewArea.style.left =`${y}px`;
+    }
+
+    console.log(`${y}px`)
+
+    current.textContent = sortedTime;
+
+
+    rangeProgress.value = proggres * 100;
+
+    rangeProgress.addEventListener('input', function(){
+        const time = (rangeProgress.value / 100) * mainVideo.duration;
+        mainVideo.currentTime = time;
+        progressShadow.style.setProperty("--progressShadow", rangeProgress.value / 100);
+    });
+
+
+    mainVideo.addEventListener('timeupdate', function() {
+        const proggres = (mainVideo.currentTime / mainVideo.duration);
+        progressShadow.style.setProperty("--progressShadow", proggres);
+        rangeProgress.value = proggres * 100;
+    });
+
+    let togglePlaybackStatus = customPlaybackStatus.getAttribute("data-speed");
+
+
+    /*controllersContainer */
+
+/* */
+/* */
+/* */
+
+    #containerAV {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        height: 30%;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        overflow: hidden;
+        z-index: 4;
+        bottom: 0;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+    #audioVisualizer {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .fulscreenMobileCustom {
+        width: 100%;
+        height:100vh;
+    }
+
+    customPlaybackStatus=videoPlayer.querySelector('#customPlaybackStatus'),
+
+    customPlaybackNotif=videoPlayer.querySelector("#customPlaybackNotif"),
+    rewindNotif=videoPlayer.querySelector('.rewindNotif'),
+arrowLOne=videoPlayer.querySelector('.arrowLOne'),
+arrowLTwo=videoPlayer.querySelector('.arrowLTwo'),
+arrowLThree=videoPlayer.querySelector('.arrowLThree'),
+rewindTime=videoPlayer.querySelector('.arrowLThree'),
+forwardNotif=videoPlayer.querySelector('.forwardNotif'),
+arrowROne=videoPlayer.querySelector('.arrowROne'),
+arrowRTwo=videoPlayer.querySelector('.arrowRTwo'),
+arrowRThree=videoPlayer.querySelector('.arrowRThree'),
+
+mainVideo.addEventListener('ended' ,myHandler,false);
+function myHandler(){
+    alert('meme')
+    playPauseIcon.src = "./assets/icons/Replay-icon.svg";
+    playPauseMobileIcon.src = "./assets/icons/Replay-icon.svg";
+};
+
+mainVideo.addEventListener('ended' ,myHandler,false);
+function myHandler(){
+    playPauseIcon.src = "./assets/icons/Replay-icon.svg";
+    playPauseMobileIcon.src = "./assets/icons/Replay-icon.svg";
+};
+
+console.log('user clicked: ', event.target);

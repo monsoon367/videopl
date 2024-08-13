@@ -17,11 +17,7 @@
                     <track label="English" kind="subtitles" src="./assets/caption/English.vtt" srclang="en">
                     <track label="Indonesia" kind="subtitles" src="./assets/caption/Indonesia.vtt" srclang="en">
                 </video>
-                <canvas id="canvas"></canvas>
-
-                <!--controller-->
-                <p class="caption_text"></p>
-                <div class="mainVideoLeftMinorSensor"></div>
+                <!--popup element-->
                 <div class="popupElementContainer">
                     <div class="popupElement">
                         <div class="blockLeft">
@@ -48,22 +44,13 @@
                     </div>
                 </div>
 
-                <div class="controllersMobile active">
-                    <div class="listMobileControllers">
-                        <div class="blockRewind"></div>
-                        <div class="blockCenter">
-                            <span class="iconMobile">
-                                <button  id="playPauseMobile"><img draggable="false"src="./assets/icons/Play-icon.svg" id="playPauseMobileIcon"></button>
-                            </span>
-                        </div>
-                        <div class="blockForward"></div>
-                    </div>
-                </div>
-                
+                <!--controller-->
+                <canvas id="ambientMode"></canvas>
+                <p class="caption_text"></p>
                 <div class="mainVideoClickF"></div>
-                
-                <div class="controllersContainer">
+                <div class="mainVideoLeftMinorSensor"></div>
 
+                <div class="controllersContainer">
                     <div class="headerControllers active">
                         <div class="headerListControllers">
                             <div class="headerLeftControllers">
@@ -81,7 +68,20 @@
                                 </span>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+
+                    <div class="controllersMobile active">
+                        <div class="listMobileControllers">
+                            <div class="blockRewind"></div>
+                            <div class="blockCenter">
+                                <span class="iconMobile">
+                                    <button  id="playPauseMobile"><img draggable="false"src="./assets/icons/Play-icon.svg" id="playPauseMobileIcon"></button>
+                                </span>
+                            </div>
+                            <div class="blockForward"></div>
+                        </div>
+                    </div>
+
                     <div class="thumbnail"><img src="" alt=""></div>
                     <div class="controllers active">
                         <div class="previewArea"><span>0:00</span><img src="" alt=""></div>
@@ -89,6 +89,7 @@
                             <div id="MainProgresInput">
                                 <div class="progressBarBufBg" tabindex="-1">
                                     <canvas class="progressBuffer" tabindex="-1"></canvas>
+                                    <div class="progressPreview" tabindex="-1"></div>
                                     <div class="progressShadow" tabindex="-1"></div>
                                 </div>
                             </div>
@@ -98,6 +99,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="listControllers">
                             <div class="leftControllers">
                                 <span class="icon">
@@ -144,6 +146,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!--settings menu-->
                 <div class="settingsContainer">
                     <div class="mainSettings">
                         <div class="settingList">
@@ -168,14 +172,17 @@
                                 <div class="settingsTextContainer"><p class="sBtnL">Quality</p><p class="sBtnR" id="qualityStatus">Auto (360p)</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
                             </li>
                         </div>
-                        <div data-label="qualityList" class="qualityList">
-                            <span>
-                                <img draggable="false" src="./assets/icons/Chevron-left.svg" id="qualityCloseBtn" role="button" tabindex="0">
-                                Playback Quality 
-                            </span>
-                            <ul>
-                              <li data-quality="360" class="active" tabindex="0" role="button" id="deafultQuality">Auto (360p)</li>
-                            </ul>
+
+                        <div class="captionList">
+                            <div class="caption">
+                                <span>
+                                    <img draggable="false" src="./assets/icons/Chevron-left.svg" id="captionCloseBtn" role="button" tabindex="0">
+                                    Select Subtitle
+                                </span>
+                              <ul>
+
+                              </ul>
+                            </div>
                         </div>
 
                         <div class="playbackList">
@@ -203,31 +210,23 @@
                             <p id="PlaybackRangeValue">1x</p>
                             <input type="range" min="25" max="200" value="100" step="5" id="rangeCustomPlayback">
                         </div>
-                        <div class="captionList">
-                            <div class="caption">
-                                <span>
-                                    <img draggable="false" src="./assets/icons/Chevron-left.svg" id="captionCloseBtn" role="button" tabindex="0">
-                                    Select Subtitle
-                                </span>
-                              <ul>
 
-                              </ul>
-                            </div>
-                          </div>
+                        <div data-label="qualityList" class="qualityList">
+                            <span>
+                                <img draggable="false" src="./assets/icons/Chevron-left.svg" id="qualityCloseBtn" role="button" tabindex="0">
+                                Playback Quality 
+                            </span>
+                            <ul>
+                              <li data-quality="360" class="active" tabindex="0" role="button" id="deafultQuality">Auto (360p)</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad nulla fugit modi officiis consequuntur similique, placeat doloremque nam? Molestiae delectus nemo debitis nihil maiores, facere aspernatur? Sit, facere amet.</h1>
-            <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad nulla fugit modi officiis consequuntur similique, placeat doloremque nam? Molestiae delectus nemo debitis nihil maiores, facere aspernatur? Sit, facere amet.</h1>
-            <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad nulla fugit modi officiis consequuntur similique, placeat doloremque nam? Molestiae delectus nemo debitis nihil maiores, facere aspernatur? Sit, facere amet.</h1>
-            <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad nulla fugit modi officiis consequuntur similique, placeat doloremque nam? Molestiae delectus nemo debitis nihil maiores, facere aspernatur? Sit, facere amet.</h1>
-            <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ad nulla fugit modi officiis consequuntur similique, placeat doloremque nam? Molestiae delectus nemo debitis nihil maiores, facere aspernatur? Sit, facere amet.</h1>
-        </div>
     </div>
 
 
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
 </body>
 </html>

@@ -389,12 +389,10 @@ video::cue {
     height: 100%;
     z-index: 8;
     background: rgba(0, 0, 0, 0.5);
-    visibility: hidden;
     opacity: 0;
     transition: 150ms ease-in-out;
 }
 .controllersMobile.active {
-    visibility: visible;
     opacity: 1;
 }
 .listMobileControllers {
@@ -471,10 +469,7 @@ video::cue {
 .controllers {
     position: absolute;
     bottom: 0px;
-    visibility: hidden;
     opacity: 0;
-    pointer-events: none;
-    touch-action: none;
     left: 0;
     padding-top: 11px;
     height: 50px;
@@ -495,7 +490,6 @@ video::cue {
     opacity: 1;
 }
 .controllers.active {
-    visibility: visible;
     opacity: 1;
     pointer-events: fill;
 }
@@ -548,11 +542,16 @@ video::cue {
     margin: auto;
     width: 97.5%;
     height: 4px;
+    outline: none;
     background: #f0f0f034;
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
 }
+.progressBarBufBg:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+}
+
 .progressBuffer {
     position: absolute;
     width: 100%;
@@ -623,10 +622,10 @@ video::cue {
     top: 10%;
     transform: translateY(-10%);
 }
-#rangeProgress:hover::-webkit-slider-thumb {
+#rangeProgress.active::-webkit-slider-thumb {
     scale: 1;
 }
-#rangeProgress:hover::-moz-range-thumb {
+#rangeProgress.active::-moz-range-thumb {
     scale: 1;
 }
 
@@ -679,6 +678,7 @@ video::cue {
 }
 .icon button {
     border: none;
+    outline: none;
     background: none;
     cursor: pointer;
     height: 30px;
@@ -686,6 +686,10 @@ video::cue {
     -webkit-tap-highlight-color: transparent;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.icon button:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+}
+
 .iconCustomForMobile img {
     display: flex;
     align-items: center;
@@ -706,10 +710,6 @@ video::cue {
     outline: none;
 }
 
-#fastRewind:active #fastRewindIcon {
-    transition: 0.2s;
-    transform: rotate(-45deg);
-}
 #fastForward:active #fastForwardIcon {
     transition: 0.2s;
     transform: rotate(45deg);
@@ -729,6 +729,7 @@ video::cue {
     opacity: 1;
     transition: 0.4s;
     border: none;
+    outline: none;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -766,6 +767,10 @@ video::cue {
     opacity: 1;
     scale: 1;
 }
+#volumeRange:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+    outline-offset: 5px;
+}
 
 .timer {
     position: relative;
@@ -784,13 +789,15 @@ video::cue {
     width: 30px;
     height: 10px;
     border-radius: 20px;
+    outline: none;
     position: relative;
     margin-right: 8px !important;
     background: #b6b6b6;
     cursor: pointer;
   }
-.icon .auto-play:focus {
+.icon .auto-play:focus-visible {
     outline-offset: 10px;
+    outline: 2px solid rgb(28, 142, 255);
 }
 .icon .auto-play::before {
     content: '\e034';
@@ -805,7 +812,7 @@ video::cue {
     cursor: pointer;
     border-radius: 50%;
     font-style: normal;
-    filter: invert(0%);
+    filter: invert(100%);
     position: absolute;
     left: -5px;
     transition: .4s;
@@ -815,9 +822,9 @@ video::cue {
 .icon .auto-play.active::before {
     content: "\e037";
     font-family: "material symbols outlined";
-    filter: invert(100%);
+    filter: invert(0%);
     left: 15px;
-    background: #000000;
+    background: #ffffff;
 }
 
 #setting:active #settingIcon {
@@ -856,6 +863,11 @@ video::cue {
     -webkit-tap-highlight-color: transparent;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     transition: 150ms;
+}
+.settingsContainer p,
+.settingsContainer button {
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .scOpen {
     display: flex;
@@ -897,7 +909,8 @@ video::cue {
     right: 100%;
 }
 
-.settingList li {
+
+.settingList button {
     display: flex;
     margin: auto;
     position: relative;
@@ -908,8 +921,14 @@ video::cue {
     font-size: 14px;
     padding: 12px;
     font-size: 14px;
+    outline: none;
+    background: none;
+    border: none;
 }
-.settingList li:hover {
+.settingList button:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+}
+.settingList button:hover {
     background: rgba(83, 83, 83, 0.546);
     transition: 150ms all;
 }
@@ -941,9 +960,7 @@ video::cue {
     filter: invert(100%);
     margin-left: 5px;
 }
-#volumeRange:focus {
-    outline-offset: 5px;
-}
+
 
 /*qualityList*/
 .qualityList {
@@ -971,29 +988,42 @@ video::cue {
     text-align: center;
     padding: 15px 0px;
 }
-.qualityList span img {
-    filter: invert(100%);
-    width: 13px;
+.qualityList span button {
+    background: none;
+    border: none;
     cursor: pointer;
     margin-left: 10px;
     margin-right: 10px;
 }
-.qualityList span img:focus {
-    outline-offset: 3px;
+.qualityList span img {
+    filter: invert(100%);
+    width: 13px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
 }
 .qualityList ul {
     position: relative;
     padding: 5px;
 }
-.qualityList li {
+
+.qualityList ul button {
     position: relative;
     width: 100%;
     height: 40px;
     font-size: 14px;
     padding: 12px 33px;
     cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+    text-align: left;
 }
-.qualityList li.active::before {
+.qualityList ul button:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+}
+.qualityList ul button.active::before {
     content: '\e876';
     font-family: "material symbols outlined";
     position: absolute;
@@ -1003,7 +1033,7 @@ video::cue {
     padding-right: 10px;
     font-size: 18px;
 }
-.qualityList li:hover {
+.qualityList ul button:hover {
     background: rgba(83, 83, 83, 0.546);
     transition: 150ms all;
 }
@@ -1034,6 +1064,13 @@ video::cue {
     width: 100%;
     padding: 15px 0px;
 }
+.playbackList ul button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 .playbackList span {
     display: block;
     font-size: 14px;
@@ -1043,9 +1080,10 @@ video::cue {
 .playbackList ul img {
     filter: invert(100%);
     width: 13px;
-    cursor: pointer;
-    margin-left: 10px;
-    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
 }
 .playbackList ul img:focus {
     outline-offset: 3px;
@@ -1053,25 +1091,30 @@ video::cue {
 #customLinkRangePlayback {
     right: 5px;
     margin-left: 20px;
-    cursor: pointer; 
     text-decoration: underline;
+    padding: 0;
 }
-#customLinkRangePlayback:focus {
-    outline-offset: 3px;
-}
+
 
 .playbackBtnList {
     padding: 5px;
 }
-.playbackList li {
+.playbackList .playbackBtnList button {
     position: relative;
     width: 100%;
     height: 40px;
     font-size: 14px;
     padding: 12px 33px;
     cursor: pointer;
+    outline: none;
+    border: none;
+    background: none;
+    text-align: left;
 }
-.playbackList li.active::before {
+.playbackList .playbackBtnList button:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+}
+.playbackList .playbackBtnList button.active::before {
     content: '\e876';
     font-family: "material symbols outlined";
     position: absolute;
@@ -1081,12 +1124,15 @@ video::cue {
     padding-right: 10px;
     font-size: 18px;
 }
-.playbackList li:hover {
+.playbackList .playbackBtnList button:hover {
     background: rgba(83, 83, 83, 0.546);
     transition: 150ms all;
 }
 #customPlaybackStatus {
     display: none;
+}
+#customPlaybackStatus.active {
+    display: block;
 }
 
 .customRangePlayback {
@@ -1107,8 +1153,12 @@ video::cue {
     margin: auto;
     width: 80%;
     margin-bottom: 12px;
-    accent-color: rgb(196, 196, 196);
+    accent-color: rgb(184, 184, 184);
     cursor: pointer;
+    outline: none;
+}
+#rangeCustomPlayback:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
 }
 
 .customRangePlayback ul {
@@ -1120,21 +1170,26 @@ video::cue {
     width: 100%;
     padding: 15px 0px;
 }
-.customRangePlayback span {
-    display: block;
-    font-size: 14px;
-    font-weight: 300px;
-    text-align: center;
-}
-.customRangePlayback ul img {
-    filter: invert(100%);
-    width: 13px;
+.customRangePlayback ul button {
+    background: none;
+    border: none;
     cursor: pointer;
     margin-left: 10px;
     margin-right: 10px;
 }
-.customRangePlayback ul img:focus {
-    outline-offset: 3px;
+.customRangePlayback ul img {
+    filter: invert(100%);
+    width: 13px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+}
+.customRangePlayback ul span {
+    display: block;
+    font-size: 14px;
+    font-weight: 300px;
+    text-align: center;
 }
 #PlaybackRangeValue {
     padding: 14px;
@@ -1168,29 +1223,49 @@ video::cue {
     text-align: center;
     padding: 15px 0px;
 }
-.captionList span img {
-    filter: invert(100%);
-    width: 13px;
+
+.captionList span button {
+    background: none;
+    border: none;
     cursor: pointer;
     margin-left: 10px;
     margin-right: 10px;
 }
-.captionList span img:focus {
+.captionList span img {
+    filter: invert(100%);
+    width: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    outline: none;
+}
+.captionList span img:focus-visible {
     outline-offset: 3px;
+    filter: invert(100%);
+    outline: 2px solid rgb(28, 142, 255);
 }
 .captionList ul {
     position: relative;
     padding: 5px;
 }
-.captionList li {
+.captionList ul button {
     position: relative;
     width: 100%;
     height: 40px;
     font-size: 14px;
     padding: 12px 33px;
     cursor: pointer;
+    outline: none;
+    background: none;
+    border: none;
+    text-align: left;
 }
-.captionList li.active::before {
+.captionList ul button:focus-visible {
+    outline: 2px solid rgb(28, 142, 255);
+}
+.captionList ul button.active::before {
     content: '\e876';
     font-family: "material symbols outlined";
     position: absolute;
@@ -1200,7 +1275,7 @@ video::cue {
     padding-right: 10px;
     font-size: 18px;
 }
-.captionList li:hover {
+.captionList ul button:hover {
     background: rgba(83, 83, 83, 0.546);
     transition: 150ms all;
 }

@@ -33,12 +33,12 @@ controllers=videoPlayer.querySelector('.controllers'),
 previewArea=videoPlayer.querySelector('.previewArea'),
 previewAreaImg=videoPlayer.querySelector('.previewArea img'),
 previewAreaSpan = videoPlayer.querySelector('.previewArea span'),
-progressBarBufBg=videoPlayer.querySelector('.progressBarBufBg'),
 progressBuffer=videoPlayer.querySelector('.progressBuffer'),
 progressPreview=videoPlayer.querySelector('.progressPreview'),
 progressShadow=videoPlayer.querySelector('.progressShadow'),
 progressBar=videoPlayer.querySelector('#progressBar'),
 rangeProgress=videoPlayer.querySelector('#rangeProgress'),
+fastRewind=videoPlayer.querySelector('#fastRewind'),
 playPause=videoPlayer.querySelector('#playPause'),
 playPauseIcon=videoPlayer.querySelector('#playPauseIcon'),
 fastForward=videoPlayer.querySelector('#fastForward'),
@@ -67,7 +67,6 @@ CaptionListBtn=videoPlayer.querySelector('#CaptionListBtn'),
 CaptionStatus=videoPlayer.querySelector("#CaptionStatus"),
 playbackSpeedBtn=videoPlayer.querySelector('#playbackSpeedBtn'),
 playbackStatus=videoPlayer.querySelector('#playbackStatus'),
-customPlaybackStatus=videoPlayer.querySelector('#customPlaybackStatus'),
 qualityBtn=videoPlayer.querySelector('#qualityBtn'),
 qualityStatus=videoPlayer.querySelector('#qualityStatus'),
 captionList=videoPlayer.querySelector('.captionList'),
@@ -75,7 +74,7 @@ captionCloseBtn=videoPlayer.querySelector('#captionCloseBtn'),
 caption_labels=videoPlayer.querySelector(".captionList ul"),
 playbackList=videoPlayer.querySelector('.playbackList'),
 playbackCloseBtn=videoPlayer.querySelector('#playbackCloseBtn'),
-playback=videoPlayer.querySelectorAll(".playbackBtnList button"),
+playback=videoPlayer.querySelectorAll(".playbackBtnList li"),
 customLinkRangePlayback=videoPlayer.querySelector('#customLinkRangePlayback'),
 customRangePlayback=videoPlayer.querySelector('.customRangePlayback'),
 playbackRangeCloseBtn=videoPlayer.querySelector('#playbackRangeCloseBtn'),
@@ -87,45 +86,25 @@ qualitys = videoPlayer.querySelectorAll("source[size]"),
 quality_ul = videoPlayer.querySelector(".settingsContainer [data-label='qualityList'] ul"),
 deafultQuality=videoPlayer.querySelector('#deafultQuality');
 
-document.addEventListener("keydown",(e) => {
-    const tagName = document.activeElement.tagName.toLowerCase();
-
-    if (tagName === "input") return
-
-  switch (e.key.toLowerCase()) {
-    case " ":
-        if (tagName === "button") return
-    case "k":
-        togglePlay()
-        toggleController()
-      break
-    case "f":
-        toggleFullscreen()
-      break
-    case "t":
-        toggleTheatherMode()
-      break
-    case "i":
-        togglepictureInPicture()
-      break
-    case "m":
-        toggleMute()
-        toggleController()
-      break
-    case "arrowleft":
-    case "j":
-        toggleRewind()
-        toggleController()
-      break
-    case "arrowright":
-    case "l":
-        toggleForward()
-        toggleController()
-      break
-    case "c":
-      //caption
-      break
-  }
+document.addEventListener('keydown',(event) => {
+    const {activeElement} = document
+    const hasButtonRole = activeElement?.getAttribute('role') === 'button'
+    if (hasButtonRole) {
+        if (['Spacebar', ' ', 'Enter'].includes(event.key)) {
+            event.preventDefault()
+        }
+        if (event.key === 'Enter') {
+            activeElement.click()
+        }
+    }
+})
+document.addEventListener('keyup',(event) => {
+    const {activeElement} = document
+    const hasButtonRole = activeElement?.getAttribute('role') === 'button'
+    if (hasButtonRole && ['Spacebar', ' ', ].includes(event.key)) {
+        event.preventDefault()
+        activeElement.click()
+    }
 })
 
 let mainVideoSources = mainVideo.querySelectorAll("source");
@@ -147,6 +126,49 @@ function blobUrl(video, videoUrl) {
 mainVideo.addEventListener("contextmenu", (e) => {
   e.preventDefault();
 });
+
+document.addEventListener("keydown",(e) => {
+    const tagName = document.activeElement.tagName.toLowerCase();
+
+    if (tagName === "input") return
+
+  switch (e.key.toLowerCase()) {
+    case " ":
+      if (tagName === "button") return
+    case "k":
+        togglePlay()
+      break
+    case "f":
+        toggleFullscreen()
+      break
+    case "t":
+        toggleTheatherMode()
+      break
+    case "i":
+        togglepictureInPicture()
+      break
+    case "m":
+        toggleMute()
+      break
+    case "arrowleft":
+    case "j":
+        toggleRewind()
+        headerControllers.classList.add('active');
+        controllers.classList.add('active');
+        controllersMobile.classList.add('active');
+      break
+    case "arrowright":
+    case "l":
+        toggleForward()
+
+      break
+    case "c":
+      //caption
+      break
+  }
+})
+
+
 
 rangeProgress.onmouseup = () => mouseUp()
 rangeProgress.onmouseout = () => progressbarMouseout()
@@ -280,35 +302,38 @@ playPauseMobile.addEventListener('click', togglePlay);
 
 //rewind forward btn function {
 function toggleRewind(){
-    mainVideo.currentTime -= 5;
+    mainVideo.currentTime -= 10;
 };
 function toggleForward(){
-    mainVideo.currentTime += 5;
+    mainVideo.currentTime += 10;
 };
 blockRewind.addEventListener('dblclick', toggleRewind);
 blockForward.addEventListener('dblclick', toggleForward);
+fastRewind.addEventListener('click', toggleRewind);
+fastForward.addEventListener('click', toggleForward);
 //}
 
 //volume btn function {
 const toggleMute = () => {
-    if (mainVideo.classList.contains('zero')) {
-        mainVideo.classList.remove('zero')
-        mainVideo.muted = false;
-        volumeRange.value = 40;
-        mainVideo.volume = 0.4;
-        volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
-        volumeBtnIcon.title = "Mute"
-      } else if (volumeRange.value == 0) {
-        volumeRange.value = mainVideo.volume * 100;
-        mainVideo.muted = false;
-        volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
-        volumeBtnIcon.title = "Mute"
-      } else {
-        volumeRange.value = 0;
-        mainVideo.muted = true;
+    mainVideo.muted = !mainVideo.muted;
+    if (mainVideo.muted) {
+        volumeRange.value = '0';
         volumeBtnIcon.src = "./assets/icons/Volume-off-icon.svg";
+        volumeRange.style.opacity = "0";
+        setTimeout(function(){
+            volumeRange.style.display = "none";
+        }, 200);
         volumeBtnIcon.title = "Unmute"
-      }
+    } else {
+        volumeRange.value = mainVideo.volume * 100;
+        
+        volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
+        volumeRange.style.display = "inline-block";
+        volumeBtnIcon.title = "Mute"
+        setTimeout(function(){
+            volumeRange.style.opacity = "1";
+        }, 50);   
+    }
 };
 volumeBtn.addEventListener('click', toggleMute);
 //}
@@ -318,12 +343,6 @@ volumeRange.addEventListener('input',() => {
     mainVideo.volume = volumeRange.value / 100;
     if (volumeRange.value == 0) {
         volumeBtnIcon.src = "./assets/icons/Volume-off-icon.svg";
-        mainVideo.classList.add('zero');
-    } else if (volumeRange.value > 0){
-        mainVideo.muted = false;
-        mainVideo.volume = volumeRange.value / 100;
-        volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
-        volumeBtnIcon.title = "Mute"
     } else if (volumeRange.value < 40){
         volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
     } else {
@@ -374,6 +393,8 @@ mainVideo.addEventListener("ended", () => {
 });
 //}
 
+
+
 //setting btn function {
 function toggleSettingCloseAll() {
     settingsContainer.classList.remove("scOpen");
@@ -396,6 +417,7 @@ setting.addEventListener('click',() => {
         settingsContainer.classList.add("scOpen");
     }
 })
+
 
 document.addEventListener('click', function handleClickOutsideBox(event) {
     // 👇️ the element the user clicked
@@ -452,11 +474,11 @@ playbackRangeCloseBtn.addEventListener('click',() => {
 });
     
 qualitys.forEach(event => {
-    let quality_html = `<button data-quality="${event.getAttribute('size')}">${event.getAttribute('size')}p</button>`;
+    let quality_html = `<li data-quality="${event.getAttribute('size')}" tabindex="0" role="button">${event.getAttribute('size')}p</li>`;
     quality_ul.insertAdjacentHTML('afterbegin', quality_html);
 });
 
-const quality_li = videoPlayer.querySelectorAll(".settingsContainer [data-label='qualityList'] ul button");
+const quality_li = videoPlayer.querySelectorAll(".settingsContainer [data-label='qualityList'] ul li");
   quality_li.forEach((event) => {
     event.addEventListener('click', (e) => {
       let quality = event.getAttribute('data-quality');
@@ -509,7 +531,7 @@ playback.forEach(playback => {
             playbackStatus.textContent = "Normal";
         }
     })
-
+    
     rangeCustomPlayback.addEventListener('input',() => {
         let cusPlayback = rangeCustomPlayback.value / 100;
         mainVideo.playbackRate = cusPlayback;
@@ -519,7 +541,7 @@ playback.forEach(playback => {
         if (cusPlayback == speed) {
             removePlaybackActiveClasses(playback);
             playback.classList.add("active");
-        } 
+        }
 
         playbackStatus.textContent = cusPlayback;
         if (cusPlayback == 1) {
@@ -527,11 +549,14 @@ playback.forEach(playback => {
         }
     })
 })
+
 function removePlaybackActiveClasses() {
     playback.forEach(playback => {
         playback.classList.remove("active");
     })
 }
+
+
 
 
 CaptionListBtn.addEventListener('click',() => {
@@ -550,14 +575,14 @@ captionCloseBtn.addEventListener('click',() => {
 if (tracks.length != 0) {
     caption_labels.insertAdjacentHTML(
         "afterbegin",
-        `<button data-track="Off" class="active">Off</button>`
+        `<li data-track="Off" tabindex="0" role="button" class="active">Off</li>`
       );
     for (let i = 0; i < tracks.length; i++) {
-      let trackLi = `<button data-track="${tracks[i].label}">${tracks[i].label}</button>`;
+      let trackLi = `<li data-track="${tracks[i].label}" tabindex="0" role="button">${tracks[i].label}</li>`;
       caption_labels.insertAdjacentHTML("beforeend", trackLi);
     }
 }
-const caption = captionList.querySelectorAll("ul button");
+const caption = captionList.querySelectorAll("ul li");
 
 caption.forEach((event) => {
     let label = event.getAttribute('data-track');
@@ -732,6 +757,7 @@ blockForward.addEventListener('touchend', toggleEndTwoTimeSpeed);
 
 //mouse touch control show hide event function {
 progressBar.onmouseover = progressBar.onmouseout = handler;
+fastRewind.onmouseover = fastRewind.onmouseout = handler;
 fastForward.onmouseover = fastForward.onmouseout = handler;
 volumeBtn.onmouseover = volumeBtn.onmouseout = handler;
 volumeRange.onmouseover = volumeRange.onmouseout = handler;
@@ -806,15 +832,22 @@ playPauseMobile.addEventListener('click',() => {
 controllers.addEventListener('mouseover',() => {
     toggleController()
 });
-progressBarBufBg.addEventListener('focus',() => {
+rangeProgress.addEventListener('focus',() => {
     toggleController()
     rangeProgress.classList.add("active");
 });
-progressBarBufBg.addEventListener('focusout',() => {
+rangeProgress.addEventListener('focusout',() => {
     rangeProgress.classList.remove("active");
 });
-
-
+rangeProgress.addEventListener('input',() => {
+    toggleController()
+});
+fastRewind.addEventListener('focus',() => {
+    toggleController()
+});
+fastRewind.addEventListener('click',() => {
+    toggleController()
+});
 playPause.addEventListener('focus',() => {
     toggleController()
 });
@@ -858,6 +891,9 @@ setting.addEventListener('click',() => {
     toggleController()
 });
 pictureInPicture.addEventListener('focus',() => {
+    toggleController()
+});
+pictureInPicture.addEventListener('click',() => {
     toggleController()
 });
 theaterMode.addEventListener('focus',() => {

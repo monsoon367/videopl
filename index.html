@@ -58,13 +58,13 @@
                             </div>
                             <div class="headerRightControllers">
                                 <span class="icon">
-                                    <i class="auto-play-mobile" tabindex="0" role="button" title="Autoplay is off"></i>
-                                  </span>
-                                <span class="icon">
-                                    <button id="captionMobile"><img draggable="false" title="Settings" src="./assets/icons/Caption-icon.svg" id="captionIcon"></button>
+                                    <i class="auto-play-mobile"></i>
                                 </span>
                                 <span class="icon">
-                                    <button id="settingMobile"><img draggable="false" title="Settings" src="./assets/icons/Setting-icon.svg" id="settingIcon"></button>
+                                    <button id="captionMobile"><img draggable="false" src="./assets/icons/Caption-icon.svg" id="captionIcon"></button>
+                                </span>
+                                <span class="icon">
+                                    <button id="settingMobile"><img draggable="false" src="./assets/icons/Setting-icon.svg" id="settingIcon"></button>
                                 </span>
                             </div>
                         </div>
@@ -87,24 +87,21 @@
                         <div class="previewArea"><span>0:00</span><img src="" alt=""></div>
                         <div class="progressContainer">
                             <div id="MainProgresInput">
-                                <div class="progressBarBufBg" tabindex="-1">
-                                    <canvas class="progressBuffer" tabindex="-1"></canvas>
-                                    <div class="progressPreview" tabindex="-1"></div>
-                                    <div class="progressShadow" tabindex="-1"></div>
+                                <div class="progressBarBufBg" tabindex="0">
+                                    <canvas class="progressBuffer"></canvas>
+                                    <div class="progressPreview"></div>
+                                    <div class="progressShadow"></div>
                                 </div>
                             </div>
                             <div id="MainProgresInput">
                                 <div id="progressBar">
-                                    <input type="range" min="0" max="100" step="any" value="0" id="rangeProgress">
+                                    <input tabindex="-1" type="range" min="0" max="100" step="any" value="0" id="rangeProgress">
                                 </div>
                             </div>
                         </div>
 
                         <div class="listControllers">
                             <div class="leftControllers">
-                                <span class="icon">
-                                    <button id="fastRewind"><img draggable="false" title="Rewind" src="./assets/icons/Rewind-icon.svg" id="fastRewindIcon"></button>
-                                </span>
                                 <span class="icon">
                                     <button  id="playPause"><img draggable="false" title="Play" src="./assets/icons/Play-icon.svg" id="playPauseIcon"></button>
                                 </span>
@@ -122,7 +119,7 @@
                             
                             <div class="rightControllers">
                                 <span class="icon">
-                                    <i class="auto-play" tabindex="0" role="button" title="Autoplay is off"></i>
+                                    <button class="auto-play" tabindex="0" role="button" title="Autoplay is off"></button>
                                   </span>
                                 <span class="icon">
                                     <button id="captionBtn"><img draggable="false" title="Caption Off" src="./assets/icons/Caption-icon.svg" id="captionIcon"></button>
@@ -151,33 +148,33 @@
                 <div class="settingsContainer">
                     <div class="mainSettings">
                         <div class="settingList">
-                            <li id="ambientBtn" role="button" tabindex="0">
+                            <button id="ambientBtn">
                                 <img draggable="false" src="./assets/icons/Setting-icon.svg" id="settingsIconL">
                                 <div class="settingsTextContainer"><p class="sBtnL">Ambient Mode</p></div>
                                 <label class="switch" style="pointer-events: none; bottom: -1px;">
                                     <input type="checkbox" tabindex="-1">
                                     <span class="slider round active"></span>
                                 </label>
-                            </li>
-                            <li id="CaptionListBtn" role="button" tabindex="0">
+                            </button>
+                            <button id="CaptionListBtn">
                                 <img draggable="false" src="./assets/icons/Caption-icon.svg" id="settingsIconL">
                                 <div class="settingsTextContainer"><p class="sBtnL">Caption</p><p class="sBtnR" id="CaptionStatus">Off</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
-                            </li>
-                            <li id="playbackSpeedBtn" role="button" tabindex="0">
+                            </button>
+                            <button id="playbackSpeedBtn">
                                 <img draggable="false" src="./assets/icons/Playback-Speedf-icon.svg" id="settingsIconL">
                                 <div class="settingsTextContainer"><p class="sBtnL">Playback speed</p><p class="sBtnR" id="playbackStatus">Normal</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
-                            </li>
-                            <li id="qualityBtn" role="button" tabindex="0">
+                            </button>
+                            <button id="qualityBtn">
                                 <img draggable="false" src="./assets/icons/Qualityicon.svg" id="settingsIconL">
                                 <div class="settingsTextContainer"><p class="sBtnL">Quality</p><p class="sBtnR" id="qualityStatus">Auto (360p)</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
-                            </li>
+                            </button>
                         </div>
 
                         <div class="captionList">
                             <div class="caption">
                                 <span>
-                                    <img draggable="false" src="./assets/icons/Chevron-left.svg" id="captionCloseBtn" role="button" tabindex="0">
-                                    Select Subtitle
+                                    <button id="captionCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
+                                    <p>Select Subtitle</p>
                                 </span>
                               <ul>
 
@@ -187,24 +184,24 @@
 
                         <div class="playbackList">
                             <ul>
-                                <img draggable="false" src="./assets/icons/Chevron-left.svg" id="playbackCloseBtn" role="button" tabindex="0">
-                                <span>Playback Speed</span><span id="customLinkRangePlayback" role="button" tabindex="0">Custom</span>
+                                <button id="playbackCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
+                                <span>Playback Speed</span><button id="customLinkRangePlayback">Custom</button>
                             </ul>
                             <div class="playbackBtnList">
-                                <li id="customPlaybackStatus" tabindex="0" role="button"></li>
-                                <li data-speed="0.25" tabindex="0" role="button">0.25</li>
-                                <li data-speed="0.5" tabindex="0" role="button">0.5</li>
-                                <li data-speed="0.75" tabindex="0" role="button">0.75</li>
-                                <li data-speed="1" class="active" tabindex="0" role="button">Normal</li>
-                                <li data-speed="1.25" tabindex="0" role="button">1.25</li>
-                                <li data-speed="1.5" tabindex="0" role="button">1.5</li>
-                                <li data-speed="1.75" tabindex="0" role="button">1.75</li>
-                                <li data-speed="2" tabindex="0" role="button">2</li>
+                                <button id="customPlaybackStatus"></button>
+                                <button data-speed="0.25">0.25</button>
+                                <button data-speed="0.5">0.5</button>
+                                <button data-speed="0.75">0.75</button>
+                                <button data-speed="1" class="active">Normal</button>
+                                <button data-speed="1.25">1.25</button>
+                                <button data-speed="1.5">1.5</button>
+                                <button data-speed="1.75">1.75</button>
+                                <button data-speed="2">2</button>
                             </div>
                         </div>
                         <div class="customRangePlayback">
                             <ul>
-                                <img draggable="false" src="./assets/icons/Chevron-left.svg" id="playbackRangeCloseBtn" role="button" tabindex="0">
+                                <button id="playbackRangeCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
                                 <span>Custom</span>
                             </ul>
                             <p id="PlaybackRangeValue">1x</p>
@@ -213,11 +210,11 @@
 
                         <div data-label="qualityList" class="qualityList">
                             <span>
-                                <img draggable="false" src="./assets/icons/Chevron-left.svg" id="qualityCloseBtn" role="button" tabindex="0">
+                                <button id="qualityCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
                                 Playback Quality 
                             </span>
                             <ul>
-                              <li data-quality="360" class="active" tabindex="0" role="button" id="deafultQuality">Auto (360p)</li>
+                              <button data-quality="360" class="active" tabindex="0" role="button" id="deafultQuality">Auto (360p)</button>
                             </ul>
                         </div>
                     </div>

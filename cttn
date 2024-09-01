@@ -189,3 +189,203 @@ function myHandler(){
 };
 
 console.log('user clicked: ', event.target);
+
+
+.icon .auto-play.active::before {
+    content: "\e037";
+    font-family: "material symbols outlined";
+    filter: invert(100%);
+    left: 15px;
+    background: #000000;
+}
+
+        if (mainVideo.classList.contains("play")) {
+            mainVideo.pause()
+          } else {
+            mainVideo.pause()
+          }
+
+          right: 5px;
+          margin-left: 20px;
+          cursor: pointer; 
+          text-decoration: underline;
+          outline: none;
+
+          <button id="customLinkRangePlayback">Custom</button>
+
+          #customLinkRangePlayback:focus {
+            outline-offset: 3px;
+            outline: 2px solid rgb(28, 142, 255);
+        }
+
+        right: 5px;
+        margin-left: 20px;
+        cursor: pointer; 
+        text-decoration: underline;
+        padding: 0;
+        outline: none;
+
+        .customRangePlayback span {
+            display: block;
+            font-size: 14px;
+            font-weight: 300px;
+            text-align: center;
+        }
+
+        margin-left: 10px;
+        margin-right: 10px;
+
+        document.addEventListener('keydown',(event) => {
+            const {activeElement} = document
+            const hasButtonRole = activeElement?.getAttribute('role') === 'button'
+            if (hasButtonRole) {
+                if (['Spacebar', ' ', 'Enter'].includes(event.key)) {
+                    event.preventDefault()
+                }
+                if (event.key === 'Enter') {
+                    activeElement.click()
+                }
+            }
+        })
+        document.addEventListener('keyup',(event) => {
+            const {activeElement} = document
+            const hasButtonRole = activeElement?.getAttribute('role') === 'button'
+            if (hasButtonRole && ['Spacebar', ' ', ].includes(event.key)) {
+                event.preventDefault()
+                activeElement.click()
+            }
+        })
+
+        case " ":
+            if (tagName === "button") return
+          case "k":
+              togglePlay()
+            break
+
+
+
+
+            mainVideo.muted = !mainVideo.muted;
+            if (mainVideo.muted) {
+                volumeRange.value = '0';
+                volumeBtnIcon.src = "./assets/icons/Volume-off-icon.svg";
+                volumeBtnIcon.title = "Unmute"
+            } else {
+                volumeRange.value = mainVideo.volume * 100;
+                volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
+                volumeBtnIcon.title = "Mute"
+            }
+
+            else if (volumeRange.value == 0){
+                mainVideo.muted = false;
+                mainVideo.volume = 0.4;
+                volumeRange.value = 40;
+                volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
+                volumeBtnIcon.title = "Mute"
+            }
+
+
+            if (volumeRange.value == 0) {
+                volumeRange.value = 80;
+                mainVideo.volume = 0.8;
+                volume.innerHTML = "volume_up";
+              } else {
+                volumeRange.value = 0;
+                mainVideo.volume = 0;
+                volume.innerHTML = "volume_off";
+              }
+
+
+              if (volumeRange.value == 0) {
+                volumeRange.value = mainVideo.volume * 100;
+                mainVideo.muted = false;
+                volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
+                volumeBtnIcon.title = "Mute"
+              } else {
+                volumeRange.value = 0;
+                mainVideo.muted = true;
+                volumeBtnIcon.src = "./assets/icons/Volume-off-icon.svg";
+                volumeBtnIcon.title = "Unmute"
+              }
+
+    mainVideo.muted = !mainVideo.muted;
+    if (mainVideo.muted) {
+        volumeRange.value = '0';
+        volumeBtnIcon.src = "./assets/icons/Volume-off-icon.svg";
+        volumeBtnIcon.title = "Unmute"
+    } else {
+        volumeRange.value = mainVideo.volume * 100;
+        volumeBtnIcon.src = "./assets/icons/Volume-up-icon.svg";
+        volumeBtnIcon.title = "Mute"
+    }
+
+
+    rangeCustomPlayback.addEventListener('input',() => {
+        let cusPlayback = rangeCustomPlayback.value / 100;
+        mainVideo.playbackRate = cusPlayback;
+
+        let speed = playback.getAttribute("data-speed");
+        PlaybackRangeValue.textContent = `${cusPlayback}x`;
+        if (cusPlayback == speed) {
+            removePlaybackActiveClasses(playback);
+            playback.classList.add("active");
+            customPlaybackStatus.classList.remove('active')
+        } else if (cusPlayback !== speed) {
+            removePlaybackActiveClasses(playback);
+            playback.classList.add("active");
+            customPlaybackStatus.classList.add('active')
+        }
+
+        playbackStatus.textContent = cusPlayback;
+        if (cusPlayback == 1) {
+            playbackStatus.textContent = "Normal";
+        }
+    })
+})
+
+
+playback.forEach(playback => {
+    playback.addEventListener('click',() => {
+        removePlaybackActiveClasses(playback);
+        playback.classList.add("active");
+
+        let speed = playback.getAttribute("data-speed");
+
+        rangeCustomPlayback.value = speed * 100;
+
+        let cusPlayback = rangeCustomPlayback.value / 100;
+        mainVideo.playbackRate = cusPlayback;
+        
+        PlaybackRangeValue.textContent = `${cusPlayback}x`;
+
+        playbackStatus.textContent = speed;
+        if (speed == 1) {
+            playbackStatus.textContent = "Normal";
+        }
+    })
+
+    rangeCustomPlayback.addEventListener('input',() => {
+        let cusPlayback = rangeCustomPlayback.value / 100;
+        mainVideo.playbackRate = cusPlayback;
+
+        let speed = playback.getAttribute("data-speed");
+        let cSdataSpeed = customPlaybackStatus.getAttribute("data-speed");
+        cSdataSpeed = cusPlayback;
+        console.log(`${cSdataSpeed}`)
+        PlaybackRangeValue.textContent = `${cusPlayback}x`;
+        if (cusPlayback == speed) {
+            removePlaybackActiveClasses(playback);
+            playback.classList.add("active");
+        }
+
+        playbackStatus.textContent = cusPlayback;
+        if (cusPlayback == 1) {
+            playbackStatus.textContent = "Normal";
+        }
+    })
+})
+function removePlaybackActiveClasses() {
+    playback.forEach(playback => {
+        playback.classList.remove("active");
+    })
+}

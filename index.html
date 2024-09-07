@@ -12,8 +12,8 @@
         <div class="container">
             <div class="videoPlayer">
                 <video preload="metadata" id="mainVideo">
-                    <source src="./assets/videoSource/ORA ORA ORA ORA ORA 60FPS(360P).mp4" size="360" type="video/mp4">
-                    <source src="./assets/videoSource/ORA ORA ORA ORA ORA 60FPS(720P_60FPS).mp4" size="720" type="video/mp4">
+                    <source src="./assets/videoSource/JoJo AMV - Josuke_s Theme - Diamond is Unbreakable - Main Theme(360P).mp4" size="360" type="video/mp4">
+                    <source src="./assets/videoSource/JoJo AMV - Josuke_s Theme - Diamond is Unbreakable - Main Theme(720P_HD).mp4" size="720" type="video/mp4">
                     <track label="English" kind="subtitles" src="./assets/caption/English.vtt" srclang="en">
                     <track label="Indonesia" kind="subtitles" src="./assets/caption/Indonesia.vtt" srclang="en">
                 </video>
@@ -48,6 +48,7 @@
                 <canvas id="ambientMode"></canvas>
                 <p class="caption_text"></p>
                 <div class="mainVideoClickF"></div>
+                <div class="mainVideoClickFM"></div>
                 <div class="mainVideoLeftMinorSensor"></div>
 
                 <div class="controllersContainer">
@@ -188,15 +189,15 @@
                                 <span>Playback Speed</span><button id="customLinkRangePlayback">Custom</button>
                             </ul>
                             <div class="playbackBtnList">
-                                <button id="customPlaybackStatus"></button>
-                                <button data-speed="0.25">0.25</button>
-                                <button data-speed="0.5">0.5</button>
-                                <button data-speed="0.75">0.75</button>
-                                <button data-speed="1" class="active">Normal</button>
-                                <button data-speed="1.25">1.25</button>
-                                <button data-speed="1.5">1.5</button>
-                                <button data-speed="1.75">1.75</button>
-                                <button data-speed="2">2</button>
+                                <button data-speed="" id="customPlaybackStatus"></button>
+                                <button data-speed="0.25" id="speedFix">0.25</button>
+                                <button data-speed="0.5" id="speedFix">0.5</button>
+                                <button data-speed="0.75" id="speedFix">0.75</button>
+                                <button data-speed="1" id="speedFix" class="active">Normal</button>
+                                <button data-speed="1.25" id="speedFix">1.25</button>
+                                <button data-speed="1.5" id="speedFix">1.5</button>
+                                <button data-speed="1.75" id="speedFix">1.75</button>
+                                <button data-speed="2" id="speedFix">2</button>
                             </div>
                         </div>
                         <div class="customRangePlayback">

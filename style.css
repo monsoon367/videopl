@@ -255,6 +255,16 @@ video::cue {
     z-index: 6;
 }
 
+.mainVideoClickFM {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height:100%;
+    display: none;
+    z-index: 7;
+}
+
 .mainVideoLeftMinorSensor {
     display: none;
     position: absolute; 
@@ -383,8 +393,9 @@ video::cue {
 }
 
 .controllersMobile {
-    display: none;
+    display: none; 
     position: absolute;
+    visibility: hidden;
     width: 100%;
     height: 100%;
     z-index: 8;
@@ -393,8 +404,10 @@ video::cue {
     transition: 150ms ease-in-out;
 }
 .controllersMobile.active {
+    visibility: visible;
     opacity: 1;
 }
+
 .listMobileControllers {
     display: flex;
     position: relative;
@@ -555,7 +568,7 @@ video::cue {
 .progressBuffer {
     position: absolute;
     width: 100%;
-    height: 4px;
+    height: 100%;
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
@@ -564,7 +577,7 @@ video::cue {
     display: none;
     position: absolute;
     width: 0%;
-    height: 4px;
+    height: 100%;
     background: transparent;
     pointer-events: none;
     user-select: none;
@@ -577,7 +590,7 @@ video::cue {
 .progressShadow {
     position: absolute;
     width: 0%;
-    height: 4px;
+    height: 100%;
     background: transparent;
     pointer-events: none;
     user-select: none;
@@ -1131,7 +1144,7 @@ video::cue {
 #customPlaybackStatus {
     display: none;
 }
-#customPlaybackStatus.active {
+#customPlaybackStatus.show {
     display: block;
 }
 
@@ -1364,6 +1377,14 @@ video::cue {
         -webkit-user-select: none;
     }
 
+    .mainVideoClickF {
+        display: none;
+    }
+    
+    .mainVideoClickFM {
+        display: block;
+    }
+
     .controllersContainer {
         border-radius: 0px;
     }
@@ -1398,12 +1419,25 @@ video::cue {
     }
 
     .controllersMobile {
-        display: block;
+        display: block; 
     }
 
     .controllers {
+        position: absolute;
+        bottom: 0px;
+        opacity: 0;
+        visibility: hidden;
+        left: 0;
         padding-top: 0px;
         height: 60px;
+        width: 100%;
+        z-index: 9;
+        transition: 150ms ease-in-out;
+    }
+    .controllers.active {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: fill;
     }
     .controllers.active::before {
         opacity: 0;
@@ -1414,6 +1448,36 @@ video::cue {
         position: absolute;
         top: 70%;
         transform: translateY(-70%);
+    }
+    #rangeProgress {
+        -webkit-appearance: none;
+        appearance: none;
+        margin: auto;
+        width: 90%;
+        background: transparent;
+        cursor: pointer;
+        border: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        z-index: 10;
+    }
+    .progressBarBufBg {
+        position: relative;
+        margin: auto;
+        width: 87.5%;
+        height: 4px;
+        outline: none;
+        background: #f0f0f034;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    #rangeProgress::-webkit-slider-thumb {
+        scale: 1;
+    }
+    #rangeProgress::-moz-range-thumb {
+        scale: 1;
     }
 
     .controllers .icon img {

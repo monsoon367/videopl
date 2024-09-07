@@ -371,7 +371,6 @@ playback.forEach(playback => {
         let speed = playback.getAttribute("data-speed");
         let cSdataSpeed = customPlaybackStatus.getAttribute("data-speed");
         cSdataSpeed = cusPlayback;
-        console.log(`${cSdataSpeed}`)
         PlaybackRangeValue.textContent = `${cusPlayback}x`;
         if (cusPlayback == speed) {
             removePlaybackActiveClasses(playback);
@@ -389,3 +388,103 @@ function removePlaybackActiveClasses() {
         playback.classList.remove("active");
     })
 }
+
+
+
+
+playback.forEach(playback => {
+    playback.addEventListener('click',() => {
+        removePlaybackActiveClasses(playback);
+        playback.classList.add("active");
+
+        let speed = playback.getAttribute("data-speed");
+        
+
+        rangeCustomPlayback.value = speed || cSdataSpeed * 100;
+
+        let cusPlayback = rangeCustomPlayback.value / 100;
+        mainVideo.playbackRate = cusPlayback;
+        
+        PlaybackRangeValue.textContent = `${cusPlayback}x`;
+
+        playbackStatus.textContent = speed;
+        if (speed == 1) {
+            playbackStatus.textContent = "Normal";
+        }
+    })
+
+    rangeCustomPlayback.addEventListener('input',() => {
+        let cusPlayback = rangeCustomPlayback.value / 100;
+        
+        mainVideo.playbackRate = cusPlayback;
+
+        let speed = playback.getAttribute("data-speed");
+        let cSdataSpeed = customPlaybackStatus.getAttribute("data-speed");
+        cSdataSpeed = `${cusPlayback}`;
+
+
+        customPlaybackStatus.textContent = `${cusPlayback}`;
+        PlaybackRangeValue.textContent = `${cusPlayback}x`;
+        
+        if (cusPlayback == speed) {
+            removePlaybackActiveClasses(playback);
+            playback.classList.add("active");
+            customPlaybackStatus.classList.add('active')
+            cSdataSpeed = `${cusPlayback - 0.05}`;
+            customPlaybackStatus.textContent = `${cusPlayback - 0.05}`;
+        } 
+
+        playbackStatus.textContent = cusPlayback;
+        if (cusPlayback == 1) {
+            playbackStatus.textContent = "Normal";
+        }
+    })
+})
+function removePlaybackActiveClasses() {
+    playback.forEach(playback => {
+        playback.classList.remove("active");
+    })
+}
+
+if (cusPlayback == 0.25 || 0.5 || 0.75 || 1 || 1.25 || 1.5 || 1.75 || 2) {
+    removePlaybackActiveClasses(playback);
+    playback.classList.add("active");
+    customPlaybackStatus.classList.add('active')
+    cSdataSpeed = `${cusPlayback - 0.05}`;
+    customPlaybackStatus.textContent = `${cusPlayback - 0.05}`;
+} 
+
+
+playback.addEventListener('click',() => {
+    removePlaybackActiveClasses(playback);
+    playback.classList.add("active");
+
+    let speed = playback.getAttribute("data-speed");
+    
+    rangeCustomPlayback.value = cSdataSpeed * 100;
+
+    let cusPlayback = rangeCustomPlayback.value / 100;
+    mainVideo.playbackRate = cusPlayback;
+    
+    PlaybackRangeValue.textContent = `${cusPlayback}x`;
+
+    playbackStatus.textContent = speed;
+    if (speed == 1) {
+        playbackStatus.textContent = "Normal";
+    }
+})
+
+mainVideoClickF.addEventListener('click', togglePlay);
+rangeProgress.classList.add("active");
+
+autoplay.classList.toggle("active");
+
+controllersMobile.addEventListener('click',() => {
+    headerControllers.classList.toggle('active');
+    controllers.classList.toggle('active');
+    controllersMobile.classList.toggle('active');
+});
+
+break 1.8
+dropin 1.2
+

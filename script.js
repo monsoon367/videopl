@@ -16,6 +16,7 @@ twoTimeSpeedNotif=videoPlayer.querySelector('.twoTimeSpeedNotif'),
 ambientMode=videoPlayer.querySelector('#ambientMode'),
 ctx=ambientMode.getContext("2d"),
 mainVideoClickF=videoPlayer.querySelector('.mainVideoClickF'),
+mainVideoClickFM=videoPlayer.querySelector('.mainVideoClickFM'),
 mainVideoLeftMinorSensor=videoPlayer.querySelector('.mainVideoLeftMinorSensor'),
 controllersContainer=videoPlayer.querySelector('.controllersContainer'),
 headerControllers=videoPlayer.querySelector('.headerControllers'),
@@ -75,7 +76,7 @@ captionCloseBtn=videoPlayer.querySelector('#captionCloseBtn'),
 caption_labels=videoPlayer.querySelector(".captionList ul"),
 playbackList=videoPlayer.querySelector('.playbackList'),
 playbackCloseBtn=videoPlayer.querySelector('#playbackCloseBtn'),
-playback=videoPlayer.querySelectorAll(".playbackBtnList button"),
+playback=videoPlayer.querySelectorAll(".playbackBtnList #speedFix"),
 customLinkRangePlayback=videoPlayer.querySelector('#customLinkRangePlayback'),
 customRangePlayback=videoPlayer.querySelector('.customRangePlayback'),
 playbackRangeCloseBtn=videoPlayer.querySelector('#playbackRangeCloseBtn'),
@@ -114,12 +115,12 @@ document.addEventListener("keydown",(e) => {
       break
     case "arrowleft":
     case "j":
-        toggleRewind()
+        toggleRewindPC()
         toggleController()
       break
     case "arrowright":
     case "l":
-        toggleForward()
+        toggleForwardPC()
         toggleController()
       break
     case "c":
@@ -210,9 +211,13 @@ function showPreviewProgress(e){
     let sortedTime = formatDuration((percent*mainVideo.duration)/100);
     previewAreaSpan.innerHTML = sortedTime;
 
-    var previewImageNumber = (Math.floor((percent-0.01)/11.5)) +1;
-    if(previewImageNumber > 0){ previewAreaImg.src = `./assets/previewImgs/preview${previewImageNumber}.jpg` }
-    if(previewImageNumber > 0){ thumbnailImg.src = `./assets/previewImgs/preview${previewImageNumber}.jpg`}
+    console.log(percent)
+
+    let me = mainVideo.duration/115;
+
+    var previewImageNumber = (Math.floor((percent-0.01)/me)) +1;
+    if(previewImageNumber > 0){ previewAreaImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg` }
+    if(previewImageNumber > 0){ thumbnailImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg`}
 }
 
 function progressbarMouseout(){
@@ -273,17 +278,23 @@ mainVideo.addEventListener("pause",()=>{
 function togglePlay(){
     mainVideo.paused ? mainVideo.play() : mainVideo.pause();
 };
-
+mainVideoClickF.addEventListener('click', togglePlay);
 playPause.addEventListener('click', togglePlay);
 playPauseMobile.addEventListener('click', togglePlay);
 //}
 
 //rewind forward btn function {
-function toggleRewind(){
+function toggleRewindPC(){
     mainVideo.currentTime -= 5;
 };
-function toggleForward(){
+function toggleForwardPC(){
     mainVideo.currentTime += 5;
+};
+function toggleRewind(){
+    mainVideo.currentTime -= 10;
+};
+function toggleForward(){
+    mainVideo.currentTime += 10;
 };
 blockRewind.addEventListener('dblclick', toggleRewind);
 blockForward.addEventListener('dblclick', toggleForward);
@@ -494,8 +505,10 @@ playback.forEach(playback => {
     playback.addEventListener('click',() => {
         removePlaybackActiveClasses(playback);
         playback.classList.add("active");
+        customPlaybackStatus.classList.remove('show')
 
         let speed = playback.getAttribute("data-speed");
+        
 
         rangeCustomPlayback.value = speed * 100;
 
@@ -510,16 +523,47 @@ playback.forEach(playback => {
         }
     })
 
+
     rangeCustomPlayback.addEventListener('input',() => {
+        customPlaybackStatus.classList.add('show')
         let cusPlayback = rangeCustomPlayback.value / 100;
+        
         mainVideo.playbackRate = cusPlayback;
 
         let speed = playback.getAttribute("data-speed");
+
+        customPlaybackStatus.textContent = `Custom (${cusPlayback})`;
         PlaybackRangeValue.textContent = `${cusPlayback}x`;
+
+        function removeCustom() {
+            customPlaybackStatus.classList.remove('show')
+            customPlaybackStatus.classList.remove("active");
+        }
+        
         if (cusPlayback == speed) {
+            customPlaybackStatus.classList.remove("active");
             removePlaybackActiveClasses(playback);
             playback.classList.add("active");
-        } 
+        } else if (cusPlayback == 0.25) {
+            removeCustom()
+        } else if (cusPlayback == 0.5) {
+            removeCustom()
+        } else if (cusPlayback == 0.75) {
+            removeCustom()
+        } else if (cusPlayback == 1) {
+            removeCustom()
+        } else if (cusPlayback == 1.25) {
+            removeCustom()
+        } else if (cusPlayback == 1.5) {
+            removeCustom()
+        } else if (cusPlayback == 1.75) {
+            removeCustom()
+        } else if (cusPlayback == 2) {
+            removeCustom()
+        } else {
+            removePlaybackActiveClasses(playback);
+            customPlaybackStatus.classList.add("active");
+        }
 
         playbackStatus.textContent = cusPlayback;
         if (cusPlayback == 1) {
@@ -794,10 +838,16 @@ function toggleControllerUnactive() {
 mainVideoClickF.addEventListener('mousemove',() => {
     toggleController()
 });
-headerControllers.addEventListener('mouseover',() => {
+mainVideoClickF.addEventListener('click',() => {
     toggleController()
 });
-controllersMobile.addEventListener('mousemove',() => {
+mainVideoClickFM.addEventListener('click',() => {
+    toggleController()
+});
+controllers.addEventListener('click',() => {
+    toggleController()
+});
+headerControllers.addEventListener('mouseover',() => {
     toggleController()
 });
 playPauseMobile.addEventListener('click',() => {
@@ -813,8 +863,9 @@ progressBarBufBg.addEventListener('focus',() => {
 progressBarBufBg.addEventListener('focusout',() => {
     rangeProgress.classList.remove("active");
 });
-
-
+rangeProgress.addEventListener('input',() => {
+    toggleController()
+});
 playPause.addEventListener('focus',() => {
     toggleController()
 });

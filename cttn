@@ -488,3 +488,9 @@ controllersMobile.addEventListener('click',() => {
 break 1.8
 dropin 1.2
 
+blockCenter.addEventListener('click',() => {
+    headerControllers.classList.remove('active');
+    controllers.classList.remove('active');
+    controllersMobile.classList.remove('active');
+})
+

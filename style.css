@@ -407,7 +407,6 @@ video::cue {
     visibility: visible;
     opacity: 1;
 }
-
 .listMobileControllers {
     display: flex;
     position: relative;
@@ -418,30 +417,30 @@ video::cue {
     content: '';
     height: 100%;
     width: 50%;
-    background: none;
 }
 .blockCenter {
+    position: absolute;
     display: flex;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 20%;
-    background: none;
+    height: 15%;
+    width: 8.5%;
 }
 .blockForward {
     content: '';
     height: 100%;
     width: 50%;
-    background: none;
 }
 .iconMobile {
+    position: absolute;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     user-select: none;
     -webkit-user-select: none;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 .iconMobile button {
     display: flex;
@@ -1394,6 +1393,7 @@ video::cue {
         opacity: 1;
         pointer-events: fill;
         touch-action: none;
+        transition: 150ms ease-in-out;
     }
     .headerControllers.active::before {
         opacity: 0;

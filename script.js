@@ -33,7 +33,7 @@ thumbnailImg=videoPlayer.querySelector(".thumbnail img"),
 controllers=videoPlayer.querySelector('.controllers'),
 previewArea=videoPlayer.querySelector('.previewArea'),
 previewAreaImg=videoPlayer.querySelector('.previewArea img'),
-previewAreaSpan = videoPlayer.querySelector('.previewArea span'),
+previewAreaSpan=videoPlayer.querySelector('.previewArea span'),
 progressBarBufBg=videoPlayer.querySelector('.progressBarBufBg'),
 progressBuffer=videoPlayer.querySelector('.progressBuffer'),
 progressPreview=videoPlayer.querySelector('.progressPreview'),
@@ -174,7 +174,7 @@ function mouseUp() {
 }
 
 function setTimelinePosition(e){
-    const rect = progressBar.getBoundingClientRect()
+    const rect = progressBarBufBg.getBoundingClientRect()
     const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
 
     let sortedTime = formatDuration((percent*mainVideo.duration)/100);
@@ -182,7 +182,7 @@ function setTimelinePosition(e){
 }
 
 function showPreviewProgress(e){
-    const rect = progressBar.getBoundingClientRect()
+    const rect = progressBarBufBg.getBoundingClientRect()
     const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
 
     progressPreview.style.width = percent + '%';
@@ -211,11 +211,11 @@ function showPreviewProgress(e){
     let sortedTime = formatDuration((percent*mainVideo.duration)/100);
     previewAreaSpan.innerHTML = sortedTime;
 
-    console.log(percent)
-
     let me = mainVideo.duration/115;
 
     var previewImageNumber = (Math.floor((percent-0.01)/me)) +1;
+    console.log(previewImageNumber)
+
     if(previewImageNumber > 0){ previewAreaImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg` }
     if(previewImageNumber > 0){ thumbnailImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg`}
 }
@@ -863,6 +863,17 @@ progressBarBufBg.addEventListener('focus',() => {
 progressBarBufBg.addEventListener('focusout',() => {
     rangeProgress.classList.remove("active");
 });
+blockRewind.addEventListener('click',() => {
+    headerControllers.classList.remove('active');
+    controllers.classList.remove('active');
+    controllersMobile.classList.remove('active');
+})
+
+blockForward.addEventListener('click',() => {
+    headerControllers.classList.remove('active');
+    controllers.classList.remove('active');
+    controllersMobile.classList.remove('active');
+})
 rangeProgress.addEventListener('input',() => {
     toggleController()
 });

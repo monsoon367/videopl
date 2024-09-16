@@ -494,3 +494,39 @@ blockCenter.addEventListener('click',() => {
     controllersMobile.classList.remove('active');
 })
 
+   width: 97.5%;
+
+   let progressWidthgal = progressBarBufBg.clientWidth + 2;
+   let M = e.offsetX;
+   let videoDuration = mainVideo.duration;
+   let progressTime = Math.floor((M / progressWidthgal) * videoDuration);
+   let currentMin = Math.floor(progressTime / 60);
+   let currentSec = Math.floor(progressTime % 60);
+   currentSec < 10 ? (currentSec = "0" + currentSec) : currentSec;
+   previewAreaSpan.innerHTML = `${currentMin} : ${currentSec}`;
+
+   let sortedTime = formatDuration((percent*mainVideo.duration)/100);
+   previewAreaSpan.innerHTML = sortedTime;
+
+
+const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};
+
+rangeProgress.addEventListener('mousemove', (e) => {
+    const rect = progressBarBufBg.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const percentage = offsetX / rect.width;
+    const time = percentage * video.duration;
+
+    // Show the preview time
+    previewTime.textContent = formatTime(time);
+    previewTime.style.display = 'block';
+});
+
+rangeProgress.addEventListener('mouseleave', () => {
+    previewTime.style.display = 'none';
+});
+

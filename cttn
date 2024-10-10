@@ -530,3 +530,185 @@ rangeProgress.addEventListener('mouseleave', () => {
     previewTime.style.display = 'none';
 });
 
+function setTimelinePosition(e){
+    const rect = progressBarBufBg.getBoundingClientRect()
+    const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
+
+    let sortedTime = formatDuration((percent*mainVideo.duration)/100);
+    current.textContent = sortedTime;
+}
+
+
+
+
+
+
+
+progressBarBufBg.onmouseup = () => mouseUp()
+progressBarBufBg.onmouseout = () => progressbarMouseout()
+progressBarBufBg.onmousedown = () => updatePlayerTime()
+progressBarBufBg.onmouseover = (e) => showPreviewProgress(e)
+progressBarBufBg.onmousemove = (e) => showPreviewProgress(e)
+
+progressBarBufBg.addEventListener("pointerdown", (e) => {
+    progressBarBufBg.setPointerCapture(e.pointerId);
+    setTimelinePosition(e);
+    progressBarBufBg.addEventListener("pointermove", setTimelinePosition);
+    progressBarBufBg.addEventListener("pointerup", () => {
+        progressBarBufBg.removeEventListener("pointermove", setTimelinePosition);
+    })
+});
+
+function updatePlayerTime() {
+    thumbnail.style.display = "block";
+}
+
+function mouseUp() {
+    thumbnail.style.display = "none";
+}
+
+function setTimelinePosition(e){
+    const rect = progressBarBufBg.getBoundingClientRect()
+    const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
+
+    let sortedTime = formatDuration((percent*mainVideo.duration)/100);
+    current.textContent = sortedTime;
+}
+
+function showPreviewProgress(e){
+    const rect = progressBarBufBg.getBoundingClientRect()
+    const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
+
+    progressPreview.style.width = percent + '%';
+    progressPreview.classList.add('active');
+
+    let progressWidthval = progressBar.clientWidth;
+    let x = e.offsetX;
+    let y = x - 100;
+
+    if (y <= 10) {
+        previewArea.style.left =`10px`
+    } else if (x >= progressWidthval - 115) {
+        previewArea.style.left ='';
+        if (!document.fullscreenElement) {
+            previewArea.style.right =`10px`
+        } else {
+            previewArea.style.right =`18px`
+        }
+    } else {
+        previewArea.style.left =`${y}px`;
+    }
+
+    previewArea.style.display = 'block'
+
+    let sortedTime = formatDuration((percent*mainVideo.duration)/100);
+    previewAreaSpan.innerHTML = sortedTime;
+
+    let me = mainVideo.duration/115;
+
+    var previewImageNumber = (Math.floor((percent-0.01)/me)) +1;
+    console.log(previewImageNumber)
+
+    if(previewImageNumber > 0){ previewAreaImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg` }
+    if(previewImageNumber > 0){ thumbnailImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg`}
+}
+
+function progressbarMouseout(){
+    previewArea.style.display = 'none'
+    progressPreview.classList.remove('active')
+}
+
+progressHead.style.left = progressWidth + '%';
+
+.progressShadow::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    right: -6.5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgb(255, 0, 0);
+    opacity: 0;
+    transition: 150ms linear;
+}
+
+.progressShadow.show::before {
+    opacity: 1;
+}
+
+<div class="settingsContainer">
+                    <div class="mainSettings">
+                        <div class="settingList">
+                            <button id="ambientBtn">
+                                <img draggable="false" src="./assets/icons/Setting-icon.svg" id="settingsIconL">
+                                <div class="settingsTextContainer"><p class="sBtnL">Ambient Mode</p></div>
+                                <label class="switch" style="pointer-events: none; bottom: -1px;">
+                                    <input type="checkbox" tabindex="-1">
+                                    <span class="slider round active"></span>
+                                </label>
+                            </button>
+                            <button id="CaptionListBtn">
+                                <img draggable="false" src="./assets/icons/Caption-icon.svg" id="settingsIconL">
+                                <div class="settingsTextContainer"><p class="sBtnL">Caption</p><p class="sBtnR" id="CaptionStatus">Off</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
+                            </button>
+                            <button id="playbackSpeedBtn">
+                                <img draggable="false" src="./assets/icons/Playback-Speedf-icon.svg" id="settingsIconL">
+                                <div class="settingsTextContainer"><p class="sBtnL">Playback speed</p><p class="sBtnR" id="playbackStatus">Normal</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
+                            </button>
+                            <button id="qualityBtn">
+                                <img draggable="false" src="./assets/icons/Qualityicon.svg" id="settingsIconL">
+                                <div class="settingsTextContainer"><p class="sBtnL">Quality</p><p class="sBtnR" id="qualityStatus">Auto (360p)</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
+                            </button>
+                        </div>
+
+                        <div class="captionList">
+                            <div class="caption">
+                                <span>
+                                    <button id="captionCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
+                                    <p>Select Subtitle</p>
+                                </span>
+                              <ul>
+
+                              </ul>
+                            </div>
+                        </div>
+
+                        <div class="playbackList">
+                            <ul>
+                                <button id="playbackCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
+                                <span>Playback Speed</span><button id="customLinkRangePlayback">Custom</button>
+                            </ul>
+                            <div class="playbackBtnList">
+                                <button data-speed="" id="customPlaybackStatus"></button>
+                                <button data-speed="0.25" id="speedFix">0.25</button>
+                                <button data-speed="0.5" id="speedFix">0.5</button>
+                                <button data-speed="0.75" id="speedFix">0.75</button>
+                                <button data-speed="1" id="speedFix" class="active">Normal</button>
+                                <button data-speed="1.25" id="speedFix">1.25</button>
+                                <button data-speed="1.5" id="speedFix">1.5</button>
+                                <button data-speed="1.75" id="speedFix">1.75</button>
+                                <button data-speed="2" id="speedFix">2</button>
+                            </div>
+                        </div>
+                        <div class="customRangePlayback">
+                            <ul>
+                                <button id="playbackRangeCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
+                                <span>Custom</span>
+                            </ul>
+                            <p id="PlaybackRangeValue">1x</p>
+                            <input type="range" min="25" max="200" value="100" step="5" id="rangeCustomPlayback">
+                        </div>
+
+                        <div data-label="qualityList" class="qualityList">
+                            <span>
+                                <button id="qualityCloseBtn"><img draggable="false" src="./assets/icons/Chevron-left.svg"></button>
+                                Playback Quality 
+                            </span>
+                            <ul>
+                              <button data-quality="360" class="active" tabindex="0" role="button" id="deafultQuality">Auto (360p)</button>
+                            </ul>
+                        </div>
+                    </div>
+                </div>

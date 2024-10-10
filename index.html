@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Video Player</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
@@ -91,12 +92,9 @@
                                 <div class="progressBarBufBg" tabindex="0">
                                     <canvas class="progressBuffer"></canvas>
                                     <div class="progressPreview"></div>
+                                    <div class="progressHead"></div>
                                     <div class="progressShadow"></div>
-                                </div>
-                            </div>
-                            <div id="MainProgresInput">
-                                <div id="progressBar">
-                                    <input tabindex="-1" type="range" min="0" max="100" step="any" value="0" id="rangeProgress">
+                                    <div class="progressBarHover"></div>
                                 </div>
                             </div>
                         </div>
@@ -218,6 +216,32 @@
                               <button data-quality="360" class="active" tabindex="0" role="button" id="deafultQuality">Auto (360p)</button>
                             </ul>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="settingsContainerMobile">
+                <div class="mainSettingsMobile">
+                    <div class="settingList">
+                        <button id="ambientBtn">
+                            <img draggable="false" src="./assets/icons/Setting-icon.svg" id="settingsIconL">
+                            <div class="settingsTextContainer"><p class="sBtnL">Ambient Mode</p></div>
+                            <label class="switch" style="pointer-events: none; bottom: -1px;">
+                                <input type="checkbox" tabindex="-1">
+                                <span class="slider round active"></span>
+                            </label>
+                        </button>
+                        <button id="CaptionListBtn">
+                            <img draggable="false" src="./assets/icons/Caption-icon.svg" id="settingsIconL">
+                            <div class="settingsTextContainer"><p class="sBtnL">Caption</p><p class="sBtnR" id="CaptionStatus">Off</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
+                        </button>
+                        <button id="playbackSpeedBtn">
+                            <img draggable="false" src="./assets/icons/Playback-Speedf-icon.svg" id="settingsIconL">
+                            <div class="settingsTextContainer"><p class="sBtnL">Playback speed</p><p class="sBtnR" id="playbackStatus">Normal</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
+                        </button>
+                        <button id="qualityBtn">
+                            <img draggable="false" src="./assets/icons/Qualityicon.svg" id="settingsIconL">
+                            <div class="settingsTextContainer"><p class="sBtnL">Quality</p><p class="sBtnR" id="qualityStatus">Auto (360p)</p></div><img draggable="false" src="./assets/icons/Chevron-right.svg" id="settingsIconR">
+                        </button>
                     </div>
                 </div>
             </div>

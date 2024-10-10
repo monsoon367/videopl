@@ -34,12 +34,12 @@ controllers=videoPlayer.querySelector('.controllers'),
 previewArea=videoPlayer.querySelector('.previewArea'),
 previewAreaImg=videoPlayer.querySelector('.previewArea img'),
 previewAreaSpan=videoPlayer.querySelector('.previewArea span'),
+progressBarHover=videoPlayer.querySelector('.progressBarHover'),
 progressBarBufBg=videoPlayer.querySelector('.progressBarBufBg'),
 progressBuffer=videoPlayer.querySelector('.progressBuffer'),
 progressPreview=videoPlayer.querySelector('.progressPreview'),
 progressShadow=videoPlayer.querySelector('.progressShadow'),
-progressBar=videoPlayer.querySelector('#progressBar'),
-rangeProgress=videoPlayer.querySelector('#rangeProgress'),
+progressHead=videoPlayer.querySelector('.progressHead'),
 playPause=videoPlayer.querySelector('#playPause'),
 playPauseIcon=videoPlayer.querySelector('#playPauseIcon'),
 fastForward=videoPlayer.querySelector('#fastForward'),
@@ -149,36 +149,18 @@ mainVideo.addEventListener("contextmenu", (e) => {
   e.preventDefault();
 });
 
-rangeProgress.onmouseup = () => mouseUp()
-rangeProgress.onmouseout = () => progressbarMouseout()
-rangeProgress.onmousedown = () => updatePlayerTime()
-rangeProgress.onmouseover = (e) => showPreviewProgress(e)
-rangeProgress.onmousemove = (e) => showPreviewProgress(e)
+progressBarBufBg.onmouseup = () => mouseUp()
+progressBarBufBg.onmousedown = () => onmouseDown()
+progressBarBufBg.onmouseout = () => progressbarMouseout()
+progressBarBufBg.onmouseover = (e) => showPreviewProgress(e)
+progressBarBufBg.onmousemove = (e) => showPreviewProgress(e)
 
-rangeProgress.addEventListener("pointerdown", (e) => {
-    rangeProgress.setPointerCapture(e.pointerId);
-    setTimelinePosition(e);
-    rangeProgress.addEventListener("pointermove", setTimelinePosition);
-    rangeProgress.addEventListener("pointerup", () => {
-        rangeProgress.removeEventListener("pointermove", setTimelinePosition);
-    })
-});
-
-function updatePlayerTime() {
-    mainVideo.currentTime = (rangeProgress.value*mainVideo.duration)/100;
+function onmouseDown() {
     thumbnail.style.display = "block";
 }
 
 function mouseUp() {
     thumbnail.style.display = "none";
-}
-
-function setTimelinePosition(e){
-    const rect = progressBarBufBg.getBoundingClientRect()
-    const percent = (Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width)*100;
-
-    let sortedTime = formatDuration((percent*mainVideo.duration)/100);
-    current.textContent = sortedTime;
 }
 
 function showPreviewProgress(e){
@@ -187,9 +169,8 @@ function showPreviewProgress(e){
 
     progressPreview.style.width = percent + '%';
     progressPreview.classList.add('active');
-    rangeProgress.classList.add("active");
 
-    let progressWidthval = progressBar.clientWidth;
+    let progressWidthval = progressBarBufBg.clientWidth;
     let x = e.offsetX;
     let y = x - 100;
 
@@ -206,6 +187,7 @@ function showPreviewProgress(e){
         previewArea.style.left =`${y}px`;
     }
 
+    progressHead.classList.add('active')
     previewArea.style.display = 'block'
 
     let sortedTime = formatDuration((percent*mainVideo.duration)/100);
@@ -214,29 +196,66 @@ function showPreviewProgress(e){
     let me = mainVideo.duration/115;
 
     var previewImageNumber = (Math.floor((percent-0.01)/me)) +1;
-    console.log(previewImageNumber)
 
     if(previewImageNumber > 0){ previewAreaImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg` }
     if(previewImageNumber > 0){ thumbnailImg.src = `./assets/prevJosukeImg/preview${previewImageNumber}.jpg`}
 }
 
 function progressbarMouseout(){
+    progressHead.classList.remove('active')
     previewArea.style.display = 'none'
     progressPreview.classList.remove('active')
-    rangeProgress.classList.remove("active");
 }
 
-mainVideo.addEventListener('timeupdate', function() {
-    const proggres = (mainVideo.currentTime / mainVideo.duration)* 100;
-    progressShadow.style.width = proggres+ '%';
-    rangeProgress.value = proggres;
+mainVideo.addEventListener("timeupdate", (e) => {
+    let currentVideoTime = e.target.currentTime;
+    let currentMin = Math.floor(currentVideoTime / 60);
+    let currentSec = Math.floor(currentVideoTime % 60);
+    // if seconds are less then 10 then add 0 at the begning
+    currentSec < 10 ? (currentSec = "0" + currentSec) : currentSec;
+    current.innerHTML = `${currentMin} : ${currentSec}`;
+
+    let videoDuration = e.target.duration;
+    // progressBar width change
+    let progressWidth = (currentVideoTime / videoDuration) * 100;
+    progressShadow.style.width = `${progressWidth}%`;
+    progressHead.style.left = progressWidth + '%';
+  });
+
+progressBarBufBg.addEventListener("pointerdown", (e) => {
+    progressBarBufBg.setPointerCapture(e.pointerId);
+    setTimelinePosition(e);
+    progressBarBufBg.addEventListener("pointermove", setTimelinePosition);
+    progressBarBufBg.addEventListener("pointerup", () => {
+        progressBarBufBg.removeEventListener("pointermove", setTimelinePosition);
+    })
+  });
+progressBarBufBg.addEventListener("touchstart", () => {
+    console.log("meme");
 });
 
-rangeProgress.addEventListener('input', function(){
-    const time = (rangeProgress.value / 100) * mainVideo.duration;
-    mainVideo.currentTime = time;
-    progressShadow.style.width = rangeProgress.value + '%';
-});
+function setTimelinePosition(e) {
+    let videoDuration = mainVideo.duration;
+    let progressWidthval = progressBarBufBg.clientWidth;
+    let ClickOffsetX = e.offsetX;
+    mainVideo.currentTime = (ClickOffsetX / progressWidthval) * videoDuration;
+
+    let progressWidth = (mainVideo.currentTime / videoDuration) * 100;
+    progressShadow.style.width = `${progressWidth}%`;
+    progressHead.style.left = progressWidth + '%';
+
+    let currentVideoTime = mainVideo.currentTime;
+    let currentMin = Math.floor(currentVideoTime / 60);
+    let currentSec = Math.floor(currentVideoTime % 60);
+    // if seconds are less then 10 then add 0 at the begning
+    currentSec < 10 ? (currentSec = "0" + currentSec) : currentSec;
+    current.innerHTML = `${currentMin}:${currentSec}`;
+    
+    toggleController()
+  }
+
+
+
 
 function drawProgress(canvas, buffered, duration) {
     let context = canvas.getContext('2d', { antialias: false });
@@ -775,8 +794,8 @@ blockForward.addEventListener('touchstart', toggleTwoTimeSpeed);
 blockForward.addEventListener('touchend', toggleEndTwoTimeSpeed);
 
 //mouse touch control show hide event function {
-progressBar.onmouseover = progressBar.onmouseout = handler;
 fastForward.onmouseover = fastForward.onmouseout = handler;
+progressBarHover.onmouseover = progressBarHover.onmouseout = handler;
 volumeBtn.onmouseover = volumeBtn.onmouseout = handler;
 volumeRange.onmouseover = volumeRange.onmouseout = handler;
 autoplay.onmouseover = autoplay.onmouseout = handler;
@@ -788,10 +807,10 @@ fullscreen.onmouseover = fullscreen.onmouseout = handler;
 
 function handler(event) {
     if (event.type == 'mouseover') {
-        progressBar.classList.add('active');
+        fastForward.classList.add('active');
       }
       if (event.type == 'mouseout') {
-        progressBar.classList.remove('active');
+        fastForward.classList.remove('active');
       }
 }
 
@@ -801,7 +820,7 @@ const hideControlss = () => {
     timer = setTimeout(() => {
         if (mainVideo.paused) return;
         if (settingsContainer.classList.contains("scOpen") 
-            || progressBar.classList.contains('active')) {
+            || fastForward.classList.contains('active')) {
             headerControllers.classList.add('active');
             controllers.classList.add('active');
             controllersMobile.classList.add('active');
@@ -856,13 +875,6 @@ playPauseMobile.addEventListener('click',() => {
 controllers.addEventListener('mouseover',() => {
     toggleController()
 });
-progressBarBufBg.addEventListener('focus',() => {
-    toggleController()
-    rangeProgress.classList.add("active");
-});
-progressBarBufBg.addEventListener('focusout',() => {
-    rangeProgress.classList.remove("active");
-});
 blockRewind.addEventListener('click',() => {
     headerControllers.classList.remove('active');
     controllers.classList.remove('active');
@@ -874,8 +886,12 @@ blockForward.addEventListener('click',() => {
     controllers.classList.remove('active');
     controllersMobile.classList.remove('active');
 })
-rangeProgress.addEventListener('input',() => {
+progressBarBufBg.addEventListener('focus',() => {
     toggleController()
+    progressHead.classList.add('active')
+});
+progressBarBufBg.addEventListener('focusout',() => {
+    progressHead.classList.remove('active')
 });
 playPause.addEventListener('focus',() => {
     toggleController()

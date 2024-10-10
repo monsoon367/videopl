@@ -556,14 +556,19 @@ video::cue {
     height: 4px;
     outline: none;
     background: #f0f0f034;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
+    cursor: pointer;
 }
 .progressBarBufBg:focus-visible {
     outline: 2px solid rgb(28, 142, 255);
 }
 
+.progressBarHover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+}
 .progressBuffer {
     position: absolute;
     width: 100%;
@@ -596,49 +601,21 @@ video::cue {
     -webkit-user-select: none;
     background: rgb(255, 0, 0);
 }
-#progressBar {
-    display: flex;
-    position: relative;
-    width: 99%;
-    margin: auto;
+
+.progressHead {
+    position: absolute;
+    background: #e31221;
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 150ms, height 150ms;
 }
-#rangeProgress {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: auto;
-    width: 100%;
-    background: transparent;
-    cursor: pointer;
-    border: none;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    z-index: 10;
-}
-#rangeProgress::-webkit-slider-thumb {
-    -webkit-appearance: none;
+
+.progressHead.active {
     width: 15px;
     height: 15px;
-    background: rgb(255, 0, 0);
-    border-radius: 50%;
-    transition: 150ms all;
-    scale: 0;
-}
-#rangeProgress::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
-    background: rgb(255, 0, 0);
-    border: none;
-    border-radius: 50%;
-    scale: 0;
-    transition: 150ms all;
-    top: 10%;
-    transform: translateY(-10%);
-}
-#rangeProgress.active::-webkit-slider-thumb {
-    scale: 1;
-}
-#rangeProgress.active::-moz-range-thumb {
-    scale: 1;
 }
 
 .controllers .listControllers {
@@ -896,6 +873,7 @@ video::cue {
     width: 240px;
     height: 130px;
 }
+
 /*mainSettings*/
 .mainSettings {
     visibility: visible;
@@ -1342,6 +1320,27 @@ video::cue {
 }
 
 
+.settingsContainerMobile {
+    display: block;
+    position: absolute;
+    width: 300px;
+    height: 230px;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(28 28 28 /90%);
+    border-radius: 10px;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transition: 150ms;
+    z-index: 100;
+}
+.mainSettingsMobile {
+
+}
+
 
 
 
@@ -1441,6 +1440,11 @@ video::cue {
     }
     .controllers.active::before {
         opacity: 0;
+    }
+
+    .progressHead {
+        width: 15px;
+        height: 15px;
     }
 
     .progressContainer {
